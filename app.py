@@ -88,6 +88,16 @@ def fetch_avg_price_per_year():
     conn.close()
     return df
 
+def fetch_all_ads():
+    conn = sqlite3.connect('ads.db')
+    query = """
+        SELECT *
+        FROM cars
+        ORDER BY date_scrape;
+    """
+    df = pd.read_sql(query, conn)
+    conn.close()
+    return df
 
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Select a page", ("Home", "About"))
