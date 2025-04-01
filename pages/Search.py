@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 # Connect to your SQLite database (replace with your actual database path)
-conn = sqlite3.connect('your_database.db')
+conn = sqlite3.connect('ads.db')
 cursor = conn.cursor()
 
 # Function to load data from the SQLite database into a pandas DataFrame
