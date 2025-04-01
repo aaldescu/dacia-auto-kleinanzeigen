@@ -99,99 +99,92 @@ def fetch_all_ads():
     conn.close()
     return df
 
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Select a page", ("Home", "About"))
 
-if page == "Home":
-    st.title("Welcome to the Car Ads Dashboard")
-    st.title("Dacia Vehicles Trend Analysis")
 
-    df = load_data_from_db()
+df = load_data_from_db()
 
-    if not df.empty:
-        df['Date'] = pd.to_datetime(df['Date'])
-        
-        st.subheader("Data Filters")
-        
-        date_ranges = ["Last 7 days", "Last month", "Last 3 months", "Last year", "All"]
-        selected_date_range = st.selectbox("Select Date Range", options=date_ranges, index=4)
-        
-        filtered_df = filter_data_by_date_range(df, selected_date_range)
-        
-        all_categories = df['Category'].unique()
-        default_categories = all_categories
-        selected_categories = st.multiselect("Select Categories to Display", 
-                                            options=all_categories, 
-                                            default=default_categories)
-        
-        st.subheader("Current Trends")
-        category_filtered_df = filtered_df[filtered_df['Category'].isin(selected_categories)] if selected_categories else filtered_df
-        display_table(category_filtered_df)
-        
-        st.subheader("Trend Chart")
-        plot_trends(filtered_df, selected_categories)
-
-    st.title("Average Asking Price by First Registration Year")
-    df = fetch_avg_price_per_year()
-    if not df.empty:
-        # Create figure
-        fig = go.Figure()
-
-        # Add bar for avg_price
-        fig.add_trace(go.Bar(
-            x=df["car_year"], 
-            y=df["avg_price"], 
-            name="Average Price (€)",
-            marker_color="blue",
-        ))
-
-        # Add bar for avg_km
-        fig.add_trace(go.Bar(
-            x=df["car_year"], 
-            y=df["avg_km"], 
-            name="Average KM",
-            marker_color="green",
-        ))
-
-        # Add line for ads_count (with a secondary Y-axis)
-        fig.add_trace(go.Scatter(
-            x=df["car_year"], 
-            y=df["ads_count"], 
-            name="Number of Ads", 
-            mode="lines+markers",
-            yaxis="y2",
-            marker_color="red"
-        ))
-
-        # Update layout for dual axes
-        fig.update_layout(
-            title="Average Price, KM & Number of Ads per Year",
-            xaxis_title="Year",
-            yaxis=dict(
-                title="Price (€) & KM",
-                side="left",
-            ),
-            yaxis2=dict(
-                title="Number of Ads",
-                overlaying="y",
-                side="right",
-            ),
-            barmode="group",
-            legend_title="Metrics"
-        )
-
-        # Display in Streamlit
-        st.plotly_chart(fig)
-
-        # Display in dataframe 
-        st.subheader("Data")
-        st.dataframe(df)
-
-    else:
-        st.write("No data available for displaying the bar chart.")
-
-if page == "About":
-    st.title("About Page")
+if not df.empty:
+    df['Date'] = pd.to_datetime(df['Date'])
     
+    st.subheader("Data Filters")
+    
+    date_ranges = ["Last 7 days", "Last month", "Last 3 months", "Last year", "All"]
+    selected_date_range = st.selectbox("Select Date Range", options=date_ranges, index=4)
+    
+    filtered_df = filter_data_by_date_range(df, selected_date_range)
+    
+    all_categories = df['Category'].unique()
+    default_categories = all_categories
+    selected_categories = st.multiselect("Select Categories to Display", 
+                                        options=all_categories, 
+                                        default=default_categories)
+    
+    st.subheader("Current Trends")
+    category_filtered_df = filtered_df[filtered_df['Category'].isin(selected_categories)] if selected_categories else filtered_df
+    display_table(category_filtered_df)
+    
+    st.subheader("Trend Chart")
+    plot_trends(filtered_df, selected_categories)
+
+st.title("Average Asking Price by First Registration Year")
+df = fetch_avg_price_per_year()
+if not df.empty:
+    # Create figure
+    fig = go.Figure()
+
+    # Add bar for avg_price
+    fig.add_trace(go.Bar(
+        x=df["car_year"], 
+        y=df["avg_price"], 
+        name="Average Price (€)",
+        marker_color="blue",
+    ))
+
+    # Add bar for avg_km
+    fig.add_trace(go.Bar(
+        x=df["car_year"], 
+        y=df["avg_km"], 
+        name="Average KM",
+        marker_color="green",
+    ))
+
+    # Add line for ads_count (with a secondary Y-axis)
+    fig.add_trace(go.Scatter(
+        x=df["car_year"], 
+        y=df["ads_count"], 
+        name="Number of Ads", 
+        mode="lines+markers",
+        yaxis="y2",
+        marker_color="red"
+    ))
+
+    # Update layout for dual axes
+    fig.update_layout(
+        title="Average Price, KM & Number of Ads per Year",
+        xaxis_title="Year",
+        yaxis=dict(
+            title="Price (€) & KM",
+            side="left",
+        ),
+        yaxis2=dict(
+            title="Number of Ads",
+            overlaying="y",
+            side="right",
+        ),
+        barmode="group",
+        legend_title="Metrics"
+    )
+
+    # Display in Streamlit
+    st.plotly_chart(fig)
+
+    # Display in dataframe 
+    st.subheader("Data")
+    st.dataframe(df)
+
+else:
+    st.write("No data available for displaying the bar chart.")
+
+
 
     
