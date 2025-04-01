@@ -16,6 +16,11 @@ def load_data():
 # Load data
 df = load_data()
 
+#Column Transformation
+# Convert car_year column to integers, discarding non-integer values
+df['car_year'] = pd.to_numeric(df['car_year'], errors='coerce').astype(int)
+
+
 # Streamlit App UI
 st.title("Car Ads Filter")
 
