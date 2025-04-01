@@ -3,6 +3,8 @@ import pandas as pd
 import os
 import sqlite3
 from datetime import datetime, timedelta
+import plotly.express as px
+import plotly.graph_objects as go
 
 def load_data_from_db():
     conn = sqlite3.connect('ads.db')
@@ -75,7 +77,9 @@ def display_table(df):
 def fetch_avg_price_per_year():
     conn = sqlite3.connect('ads.db')
     query = """
-        SELECT car_year, AVG(CAST(price AS REAL)) as avg_price
+        SELECT car_year, ROUND(AVG(CAST(price AS REAL)),0) as avg_price, 
+        ROUND(AVG(CAST(car_km AS INTEGER)),0) as avg_km,
+        COUNT(id) as ads_count
         FROM cars
         GROUP BY car_year
         ORDER BY car_year;
@@ -84,8 +88,9 @@ def fetch_avg_price_per_year():
     conn.close()
     return df
 
+
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Select a page", ("Home", "Price Distribution by Year"))
+page = st.sidebar.radio("Select a page", ("Home", "Distributions"))
 
 if page == "Home":
     st.title("Welcome to the Car Ads Dashboard")
@@ -116,10 +121,60 @@ if page == "Home":
         st.subheader("Trend Chart")
         plot_trends(filtered_df, selected_categories)
 
-if page == "Price Distribution by Year":
-    st.title("Car Ads Price Distribution by Year")
+if page == "Distributions":
+    st.title("Average Asking Price by First Registration Year")
     df = fetch_avg_price_per_year()
     if not df.empty:
-        st.bar_chart(df.set_index('car_year')['avg_price'])
+        # Create figure
+        fig = go.Figure()
+
+        # Add bar for avg_price
+        fig.add_trace(go.Bar(
+            x=df["car_year"], 
+            y=df["avg_price"], 
+            name="Average Price (€)",
+            marker_color="blue",
+        ))
+
+        # Add bar for avg_km
+        fig.add_trace(go.Bar(
+            x=df["car_year"], 
+            y=df["avg_km"], 
+            name="Average KM",
+            marker_color="green",
+        ))
+
+        # Add line for ads_count (with a secondary Y-axis)
+        fig.add_trace(go.Scatter(
+            x=df["car_year"], 
+            y=df["ads_count"], 
+            name="Number of Ads", 
+            mode="lines+markers",
+            yaxis="y2",
+            marker_color="red"
+        ))
+
+        # Update layout for dual axes
+        fig.update_layout(
+            title="Average Price, KM & Number of Ads per Year",
+            xaxis_title="Year",
+            yaxis=dict(
+                title="Price (€) & KM",
+                side="left",
+            ),
+            yaxis2=dict(
+                title="Number of Ads",
+                overlaying="y",
+                side="right",
+            ),
+            barmode="group",
+            legend_title="Metrics"
+        )
+
+        # Display in Streamlit
+        st.plotly_chart(fig)
+
     else:
         st.write("No data available for displaying the bar chart.")
+
+    
