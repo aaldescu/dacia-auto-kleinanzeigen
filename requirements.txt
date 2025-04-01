@@ -2,3 +2,4 @@ rnet
 beautifulsoup4
 colorlog
 lxml
+plotly
