@@ -90,7 +90,7 @@ def fetch_avg_price_per_year():
 
 
 st.sidebar.title("Navigation")
-page = st.sidebar.radio("Select a page", ("Home", "Distributions"))
+page = st.sidebar.radio("Select a page", ("Home", "About"))
 
 if page == "Home":
     st.title("Welcome to the Car Ads Dashboard")
@@ -121,7 +121,6 @@ if page == "Home":
         st.subheader("Trend Chart")
         plot_trends(filtered_df, selected_categories)
 
-if page == "Distributions":
     st.title("Average Asking Price by First Registration Year")
     df = fetch_avg_price_per_year()
     if not df.empty:
@@ -176,5 +175,9 @@ if page == "Distributions":
 
     else:
         st.write("No data available for displaying the bar chart.")
+
+if page == "About":
+    st.title("About Page")
+    
 
     
