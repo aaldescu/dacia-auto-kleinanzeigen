@@ -19,7 +19,13 @@ df = load_data()
 #Column Transformation
 # Convert car_year column to integers, discarding non-integer values
 df['car_year'] = pd.to_numeric(df['car_year'], errors='coerce').dropna().astype(int)
+df['price'] = pd.to_numeric(df['price'], errors='coerce').dropna().astype(int)
+df['car_km'] = pd.to_numeric(df['car_km'], errors='coerce').dropna().astype(int)
 
+# Ensure `date_posted` column is properly converted to datetime
+df['date_posted'] = pd.to_datetime(df['date_posted'], errors='coerce')
+# Drop invalid dates (NaT values)
+df = df.dropna(subset=['date_posted'])
 
 
 # Streamlit App UI
@@ -36,16 +42,15 @@ ad_type_options = df['ad_type'].unique().tolist()
 ad_type_filter = st.sidebar.selectbox("Ad Type", ['All'] + ad_type_options)
 
 # Filter: Car KM (Slider)
-car_km_min, car_km_max = df['car_km'].apply(pd.to_numeric, errors='coerce').dropna().min(), df['car_km'].apply(pd.to_numeric, errors='coerce').dropna().max()
+car_km_min, car_km_max = df['car_km'].apply(pd.to_numeric, errors='coerce').min(), df['car_km'].apply(pd.to_numeric, errors='coerce').max()
 car_km_filter = st.sidebar.slider("Car KM", min_value=int(car_km_min), max_value=int(car_km_max), value=(int(car_km_min), int(car_km_max)))
 
 # Filter: Car Year (Slider)
-car_year_min, car_year_max = df['car_year'].astype(int).min(), df['car_year'].astype(int).max()
+car_year_min, car_year_max = df['car_year'].min(), df['car_year'].max()
 car_year_filter = st.sidebar.slider("Car Year", min_value=int(car_year_min), max_value=int(car_year_max), value=(int(car_year_min), int(car_year_max)))
 
 # Filter: Date Posted (Slider)
-df['date_posted'] = pd.to_datetime(df['date_posted'])
-date_posted_min, date_posted_max = df['date_posted'].min(), df['date_posted'].max()
+date_posted_min, date_posted_max = df['date_posted'].min().date(), df['date_posted'].max().date()
 date_posted_filter = st.sidebar.slider("Date Posted", min_value=date_posted_min, max_value=date_posted_max, value=(date_posted_min, date_posted_max))
 
 # Filter: Title (Text Box)
