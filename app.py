@@ -173,6 +173,10 @@ if page == "Home":
         # Display in Streamlit
         st.plotly_chart(fig)
 
+        # Display in dataframe 
+        st.subheader("Data")
+        st.dataframe(df)
+
     else:
         st.write("No data available for displaying the bar chart.")
 
