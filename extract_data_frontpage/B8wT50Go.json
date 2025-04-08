@@ -1,0 +1,32 @@
+[
+    {
+        "date_scrape": "04/08/2025",
+        "category": "Euro1",
+        "count": "3",
+        "url": "/s-autos/dacia/c216+autos.marke_s:dacia+autos.schadstoffklasse_s:euro1"
+    },
+    {
+        "date_scrape": "04/08/2025",
+        "category": "Euro3",
+        "count": "8",
+        "url": "/s-autos/dacia/c216+autos.marke_s:dacia+autos.schadstoffklasse_s:euro3"
+    },
+    {
+        "date_scrape": "04/08/2025",
+        "category": "Euro4",
+        "count": "729",
+        "url": "/s-autos/dacia/c216+autos.marke_s:dacia+autos.schadstoffklasse_s:euro4"
+    },
+    {
+        "date_scrape": "04/08/2025",
+        "category": "Euro5",
+        "count": "1041",
+        "url": "/s-autos/dacia/c216+autos.marke_s:dacia+autos.schadstoffklasse_s:euro5"
+    },
+    {
+        "date_scrape": "04/08/2025",
+        "category": "Euro6",
+        "count": "2307",
+        "url": "/s-autos/dacia/c216+autos.marke_s:dacia+autos.schadstoffklasse_s:euro6"
+    }
+]
