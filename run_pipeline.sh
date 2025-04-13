@@ -18,7 +18,7 @@ source "$SCRIPT_DIR/.venv/bin/activate"
 if [ $? -ne 0 ]; then
   HAS_ERROR=1
   ERROR_MESSAGE+="Failed to activate virtual environment.\n"
-  echo -e "To: andrei.aldescu@yahoo.com\nFrom: contact@andreialdescu.com\nSubject:ERROR - Cannot activate Python venv\n\nFailed to activate the Python virtual environment." | sendmail andrei.aldescu@yahoo.com
+  echo -e "Subject:ERROR - Cannot activate Python venv\n\nFailed to activate the Python virtual environment." | mstmp andrei.aldescu@yahoo.com
   exit 1
 fi
 
@@ -123,6 +123,6 @@ else
 fi
 
 # Send the email
-echo -e "To: andrei.aldescu@yahoo.com\nFrom: contact@andreialdescu.com\nSubject:$SUBJECT\n\n$BODY" | sendmail andrei.aldescu@yahoo.com
+echo -e "Subject:$SUBJECT\n\n$BODY" | msmtp andrei.aldescu@yahoo.com
 
 exit $HAS_ERROR
