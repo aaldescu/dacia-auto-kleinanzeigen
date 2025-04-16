@@ -192,9 +192,15 @@ def create_extended_table(conn, original_df, extracted_df):
     # Drop the table if it exists
     conn.execute("DROP TABLE IF EXISTS cars_extended")
     
-    # Get column lists for both dataframes
+    # Define all required columns including the extracted ones
+    extracted_columns = [
+        'brand', 'model', 'trim', 'generation', 'engine_size', 'fuel_type',
+        'power', 'drivetrain', 'transmission', 'features', 'condition',
+        'extracted_year', 'emissions'
+    ]
+    
+    # Get original columns
     original_cols = list(original_df.columns)
-    extracted_cols = [col for col in extracted_df.columns if col != 'id']  # exclude id which is in both
     
     # Create the SQL for the new table with proper column definitions
     columns_sql = []
@@ -211,31 +217,37 @@ def create_extended_table(conn, original_df, extracted_df):
             columns_sql.append(f"{col} TEXT")
     
     # Add extracted columns (all as TEXT for simplicity)
-    for col in extracted_cols:
+    for col in extracted_columns:
         columns_sql.append(f"{col} TEXT")
     
     # Build the CREATE TABLE statement
     create_table_sql = f'''
     CREATE TABLE cars_extended (
         {', '.join(columns_sql)},
-        PRIMARY KEY (id, date_scrape)
+        PRIMARY KEY (id)
     )
     '''
     
     # Execute the create table statement
     conn.execute(create_table_sql)
-    
-    # Now we need to merge the dataframes and insert the data
-    # We'll use pandas merge to combine them
-    print("Merging original and extracted dataframes...")
-    
-    # Perform merge on 'id' column
-    merged_df = pd.merge(original_df, extracted_df, on='id', how='left')
-    
-    # Insert the merged data into the new table
-    print(f"Inserting {len(merged_df)} rows into cars_extended table...")
-    merged_df.to_sql('cars_extended', conn, if_exists='append', index=False)
     conn.commit()
+    
+    # If we have data to insert, do it
+    if len(original_df) > 0:
+        # Perform merge on 'id' column if we have extracted data
+        if len(extracted_df) > 0:
+            merged_df = pd.merge(original_df, extracted_df, on='id', how='left')
+        else:
+            merged_df = original_df
+            # Add empty columns for extracted fields
+            for col in extracted_columns:
+                if col not in merged_df.columns:
+                    merged_df[col] = None
+        
+        # Insert the merged data into the new table
+        print(f"Inserting {len(merged_df)} rows into cars_extended table...")
+        merged_df.to_sql('cars_extended', conn, if_exists='append', index=False)
+        conn.commit()
 
 def normalize_features(df):
     """
