@@ -105,10 +105,6 @@ def extract_car_details_with_gpt(db_path, api_key):
         # Convert batch results to DataFrame
         batch_df = pd.DataFrame(batch_results)
         
-        # Ensure we don't have a conflict with the 'year' column
-        if 'year' in batch_df.columns:
-            batch_df.rename(columns={'year': 'extracted_year'}, inplace=True)
-        
         # Convert list values to comma-separated strings and ensure all values are properly typed
         for col in batch_df.columns:
             if col == 'id':
@@ -163,9 +159,7 @@ def extract_with_gpt(client, title):
         - power: engine power in HP/PS/kW
         - drivetrain: 2WD, 4WD, FWD, RWD, AWD, 4x2, 4x4, etc.
         - transmission: automatic, manual, etc.
-        - features: list of key features mentioned (comma separated)
         - condition: any mentioned condition like mileage, ownership, inspection
-        - year: production year if mentioned
         - emissions: emissions standard if mentioned
         
         Respond with ONLY a JSON object containing these fields, nothing else.
@@ -209,9 +203,7 @@ def extract_with_gpt(client, title):
             'power': None,
             'drivetrain': None,
             'transmission': None,
-            'features': None,
             'condition': None,
-            'year': None,
             'emissions': None
         }
 
@@ -223,8 +215,7 @@ def create_extended_table(conn, original_df, extracted_df):
     # Define all required columns including the extracted ones
     extracted_columns = [
         'brand', 'model', 'trim', 'generation', 'engine_size', 'fuel_type',
-        'power', 'drivetrain', 'transmission', 'features', 'condition',
-        'extracted_year', 'emissions'
+        'power', 'drivetrain', 'transmission', 'condition', 'emissions'
     ]
     
     # Get original columns
