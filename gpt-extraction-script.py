@@ -24,26 +24,44 @@ def extract_car_details_with_gpt(db_path, api_key):
         conn.close()
         return pd.DataFrame()
     
-    # Load data from the cleaned cars table
-    query = "SELECT * FROM cars_clean"
+    # Check if cars_extended table exists and get processed ids
+    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='cars_extended';")
+    processed_ids = set()
+    if cursor.fetchone():
+        query = "SELECT id FROM cars_extended WHERE brand IS NOT NULL OR model IS NOT NULL"
+        processed_ids = set(pd.read_sql_query(query, conn)['id'].tolist())
+    
+    # Load data from the cleaned cars table, excluding processed ids
+    if processed_ids:
+        placeholders = ','.join(["'{}'".format(id) for id in processed_ids])
+        query = f"SELECT * FROM cars_clean WHERE id NOT IN ({placeholders})"
+    else:
+        query = "SELECT * FROM cars_clean"
+    
     df = pd.read_sql_query(query, conn)
     
-    print(f"Loaded {len(df)} rows from cars_clean table")
+    print(f"Loaded {len(df)} unprocessed rows from cars_clean table")
+    print(f"Skipping {len(processed_ids)} already processed ads")
     
     if len(df) == 0:
-        print("No records found in cars_clean table. Please populate it first.")
+        print("No new records to process.")
         conn.close()
         return pd.DataFrame()
     
+    # Ensure cars_extended table exists with correct schema
+    print("Setting up cars_extended table...")
+    create_extended_table(conn, df.head(0), pd.DataFrame(columns=['id']).head(0))
+    
     # Prepare batch processing
     batch_size = 25  # Adjust based on API rate limits
-    results = []
+    total_processed = 0
     
     print(f"Processing {len(df)} car titles in batches of {batch_size}...")
     
     # Process in batches to avoid API rate limits
     for i in range(0, len(df), batch_size):
         batch = df.iloc[i:i+batch_size]
+        batch_results = []
         print(f"Processing batch {i//batch_size + 1}/{(len(df) + batch_size - 1)//batch_size}")
         
         for _, row in batch.iterrows():
@@ -52,7 +70,7 @@ def extract_car_details_with_gpt(db_path, api_key):
             
             # Skip if title is empty
             if pd.isna(title) or title.strip() == '':
-                results.append({
+                batch_results.append({
                     'id': car_id,
                     'brand': None,
                     'model': None,
@@ -75,23 +93,28 @@ def extract_car_details_with_gpt(db_path, api_key):
             
             # Add car_id to the extracted information
             extracted_info['id'] = car_id
-            results.append(extracted_info)
-            
+            batch_results.append(extracted_info)
+        
+        # Convert batch results to DataFrame
+        batch_df = pd.DataFrame(batch_results)
+        
+        # Ensure we don't have a conflict with the 'year' column
+        if 'year' in batch_df.columns:
+            batch_df.rename(columns={'year': 'extracted_year'}, inplace=True)
+        
+        # Insert batch results into cars_extended table
+        print(f"Inserting batch of {len(batch_df)} rows into cars_extended table...")
+        batch_with_original = pd.merge(batch, batch_df, on='id', how='left')
+        batch_with_original.to_sql('cars_extended', conn, if_exists='append', index=False)
+        conn.commit()
+        
+        total_processed += len(batch_df)
+        print(f"Progress: {total_processed}/{len(df)} records processed")
+        
         # Avoid hitting API rate limits
         time.sleep(1)
     
-    # Convert results to DataFrame
-    extracted_df = pd.DataFrame(results)
-    
-    print(f"Created extracted dataframe with {len(extracted_df)} rows")
-    
-    # Ensure we don't have a conflict with the 'year' column
-    if 'year' in extracted_df.columns:
-        extracted_df.rename(columns={'year': 'extracted_year'}, inplace=True)
-    
-    # Create extended table by combining the original data with extracted data
-    print("Creating cars_extended table...")
-    create_extended_table(conn, df, extracted_df)
+    print(f"Completed processing all {total_processed} records!")
     
     conn.close()
     print("GPT extraction completed and data stored in cars_extended table!")
