@@ -28,8 +28,15 @@ def extract_car_details_with_gpt(db_path, api_key):
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='cars_extended';")
     processed_ids = set()
     if cursor.fetchone():
-        query = "SELECT id FROM cars_extended WHERE brand IS NOT NULL OR model IS NOT NULL"
-        processed_ids = set(pd.read_sql_query(query, conn)['id'].tolist())
+        # First check if the columns exist
+        cursor.execute("PRAGMA table_info(cars_extended)")
+        columns = [col[1] for col in cursor.fetchall()]
+        
+        if 'brand' in columns and 'model' in columns:
+            query = "SELECT id FROM cars_extended WHERE brand IS NOT NULL OR model IS NOT NULL"
+            processed_ids = set(pd.read_sql_query(query, conn)['id'].tolist())
+        else:
+            print("Note: cars_extended table exists but doesn't have all required columns yet.")
     
     # Load data from the cleaned cars table, excluding processed ids
     if processed_ids:
