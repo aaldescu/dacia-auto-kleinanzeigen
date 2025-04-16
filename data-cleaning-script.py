@@ -169,7 +169,7 @@ def create_clean_table(conn, df):
     # Create the new table
     conn.execute('''
     CREATE TABLE cars_clean (
-        id TEXT,
+        id TEXT PRIMARY KEY,
         ad_type TEXT,
         km NUMERIC,
         car_year INTEGER,
@@ -180,8 +180,7 @@ def create_clean_table(conn, df):
         date_scrape TEXT,
         title TEXT,
         price NUMERIC,
-        time_on_market NUMERIC,
-        PRIMARY KEY (id, date_scrape)
+        time_on_market NUMERIC
     )
     ''')
     
