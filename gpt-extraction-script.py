@@ -109,9 +109,23 @@ def extract_car_details_with_gpt(db_path, api_key):
         if 'year' in batch_df.columns:
             batch_df.rename(columns={'year': 'extracted_year'}, inplace=True)
         
+        # Convert list values to comma-separated strings and ensure all values are properly typed
+        for col in batch_df.columns:
+            if col == 'id':
+                continue
+            batch_df[col] = batch_df[col].apply(lambda x: ', '.join(x) if isinstance(x, list) else x)
+            batch_df[col] = batch_df[col].astype(str).where(batch_df[col].notna(), None)
+        
         # Insert batch results into cars_extended table
         print(f"Inserting batch of {len(batch_df)} rows into cars_extended table...")
         batch_with_original = pd.merge(batch, batch_df, on='id', how='left')
+        
+        # Convert any remaining non-string values in the merged DataFrame
+        for col in batch_with_original.columns:
+            if col in ['km', 'price', 'time_on_market', 'car_year']:
+                continue  # Skip numeric columns
+            batch_with_original[col] = batch_with_original[col].apply(lambda x: str(x) if pd.notna(x) else None)
+        
         batch_with_original.to_sql('cars_extended', conn, if_exists='append', index=False)
         conn.commit()
         
