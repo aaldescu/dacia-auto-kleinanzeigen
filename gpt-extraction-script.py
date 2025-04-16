@@ -187,6 +187,13 @@ def extract_with_gpt(client, title):
         # Parse the response
         extracted_json = json.loads(response.choices[0].message.content)
         
+        # Convert any list values to comma-separated strings
+        for key, value in extracted_json.items():
+            if isinstance(value, list):
+                extracted_json[key] = ', '.join(str(v) for v in value)
+            elif value is not None:
+                extracted_json[key] = str(value)
+        
         return extracted_json
     
     except Exception as e:
