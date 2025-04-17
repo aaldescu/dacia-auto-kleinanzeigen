@@ -190,7 +190,9 @@ def create_clean_table(conn, df):
 
 if __name__ == "__main__":
     # Path to your SQLite database
-    database_path = input("Enter the path to your SQLite database: ")
+    database_path = 'ads.db'
+    if not database_path:
+        database_path = input("Enter the path to your SQLite database: ")
     
     # Clean the car data
     cleaned_data = clean_cars_data(database_path)

@@ -4,3 +4,7 @@ colorlog
 lxml
 plotly
 streamlit
+openai
+tqdm
+pandas
+numpy
