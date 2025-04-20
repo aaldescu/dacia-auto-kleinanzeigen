@@ -81,6 +81,10 @@ def clean_cars_data(db_path):
     if len(df_clean) > 0:
         print(f"Creating cars_clean table with {len(df_clean)} rows...")
         create_clean_table(conn, df_clean)
+        
+        # Export the cleaned data to CSV
+        print("Exporting data to CSV file...")
+        export_to_csv(df_clean)
     else:
         print("WARNING: No data to write to cars_clean table!")
     
@@ -187,6 +191,16 @@ def create_clean_table(conn, df):
     # Insert the cleaned data
     df.to_sql('cars_clean', conn, if_exists='append', index=False)
     conn.commit()
+
+def export_to_csv(df, filename='cars_clean.csv'):
+    """Export the cleaned data to a CSV file"""
+    try:
+        df.to_csv(filename, index=False)
+        print(f"Successfully exported data to {filename}")
+        return True
+    except Exception as e:
+        print(f"Error exporting data to CSV: {str(e)}")
+        return False
 
 if __name__ == "__main__":
     # Path to your SQLite database
