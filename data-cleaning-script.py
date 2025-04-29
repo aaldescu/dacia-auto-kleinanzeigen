@@ -79,14 +79,14 @@ def clean_cars_data(db_path):
     
     # Create the cleaned cars table
     if len(df_clean) > 0:
-        print(f"Creating cars_clean table with {len(df_clean)} rows...")
-        create_clean_table(conn, df_clean)
+        #print(f"Creating cars_clean table with {len(df_clean)} rows...")
+        #create_clean_table(conn, df_clean)
         
         # Export the cleaned data to CSV
         print("Exporting data to CSV file...")
         export_to_csv(df_clean)
     else:
-        print("WARNING: No data to write to cars_clean table!")
+        print("WARNING: No data to write to cars_clean file!")
     
     conn.close()
     print("Data cleaning completed successfully!")
