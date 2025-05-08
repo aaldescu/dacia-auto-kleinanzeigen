@@ -10,3 +10,4 @@ pandas
 numpy
 python-dotenv 
 pymysql
+SQLAlchemy==1.4.0
