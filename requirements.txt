@@ -8,3 +8,5 @@ openai
 tqdm
 pandas
 numpy
+python-dotenv 
+pymysql

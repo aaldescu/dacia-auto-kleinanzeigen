@@ -1,17 +1,42 @@
-import sqlite3
+import os
+import pymysql
 import pandas as pd
 import re
 from datetime import datetime
+from dotenv import load_dotenv
 
-def clean_cars_data(db_path):
-    # Connect to the SQLite database
-    conn = sqlite3.connect(db_path)
+# Load environment variables
+load_dotenv()
+
+def clean_cars_data():
+    # Get database connection details from environment variables
+    db_host = os.getenv('DB_HOST', 'andreialdescu.com')
+    db_port = int(os.getenv('DB_PORT', 3306))
+    db_name = os.getenv('DB_NAME', 'otzbgdpw_dacia')
+    db_user = os.getenv('DB_USER', 'otzbgdpw_dacia')
+    db_password = os.getenv('DB_PASSWORD', '')
+    
+    # Connect to the MySQL database
+    try:
+        conn = pymysql.connect(
+            host=db_host,
+            port=db_port,
+            user=db_user,
+            password=db_password,
+            database=db_name,
+            charset='utf8mb4',
+            cursorclass=pymysql.cursors.DictCursor
+        )
+        print(f"Connected to MySQL database: {db_name} on {db_host}")
+    except Exception as e:
+        print(f"Error connecting to MySQL database: {e}")
+        return pd.DataFrame()
     
     print("Connected to database. Checking tables...")
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    cursor.execute("SHOW TABLES")
     tables = cursor.fetchall()
-    print(f"Available tables: {[t[0] for t in tables]}")
+    print(f"Available tables: {[list(t.values())[0] for t in tables]}")
     
     # Extract data from the original table
     try:
@@ -167,29 +192,45 @@ def calculate_days_on_market(date_posted, date_scrape):
 
 def create_clean_table(conn, df):
     """Create the cleaned cars table"""
+    cursor = conn.cursor()
+    
     # Drop the table if it exists
-    conn.execute("DROP TABLE IF EXISTS cars_clean")
+    cursor.execute("DROP TABLE IF EXISTS cars_clean")
     
     # Create the new table
-    conn.execute('''
+    cursor.execute('''
     CREATE TABLE cars_clean (
-        id TEXT PRIMARY KEY,
-        ad_type TEXT,
-        km NUMERIC,
-        car_year INTEGER,
+        id VARCHAR(50) PRIMARY KEY,
+        ad_type VARCHAR(20),
+        km FLOAT,
+        car_year INT,
         image_src TEXT,
-        location TEXT,
-        zipcode TEXT,
-        date_posted TEXT,
-        date_scrape TEXT,
+        location VARCHAR(100),
+        zipcode VARCHAR(10),
+        date_posted VARCHAR(20),
+        date_scrape VARCHAR(20),
         title TEXT,
-        price NUMERIC,
-        time_on_market NUMERIC
-    )
+        price FLOAT,
+        time_on_market INT
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
     ''')
     
-    # Insert the cleaned data
-    df.to_sql('cars_clean', conn, if_exists='append', index=False)
+    # Insert the cleaned data row by row
+    for _, row in df.iterrows():
+        # Replace NaN values with None for SQL compatibility
+        row_dict = row.where(pd.notnull(row), None).to_dict()
+        
+        # Create placeholders for the SQL query
+        placeholders = ", ".join(["%s"] * len(row_dict))
+        columns = ", ".join(row_dict.keys())
+        
+        # Create the SQL query
+        sql = f"INSERT INTO cars_clean ({columns}) VALUES ({placeholders})"
+        
+        # Execute the query
+        cursor.execute(sql, list(row_dict.values()))
+    
+    # Commit the changes
     conn.commit()
 
 def export_to_csv(df, filename='cars_clean.csv'):
@@ -203,13 +244,8 @@ def export_to_csv(df, filename='cars_clean.csv'):
         return False
 
 if __name__ == "__main__":
-    # Path to your SQLite database
-    database_path = 'ads.db'
-    if not database_path:
-        database_path = input("Enter the path to your SQLite database: ")
-    
-    # Clean the car data
-    cleaned_data = clean_cars_data(database_path)
+    # Clean the car data using MySQL connection from environment variables
+    cleaned_data = clean_cars_data()
     
     # Optional: Preview the cleaned data
     if not cleaned_data.empty:

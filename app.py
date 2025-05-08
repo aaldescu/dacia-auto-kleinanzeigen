@@ -1,20 +1,40 @@
 import streamlit as st
 import pandas as pd
-import os
-import sqlite3
 from datetime import datetime, timedelta
 import plotly.express as px
 import plotly.graph_objects as go
 
+
+
+# Initialize connection to MySQL
+@st.cache_resource
+def init_connection():
+    """Initialize connection to MySQL database using Streamlit's connection API"""
+    try:
+        # Connect using the [connections.mysql] section from secrets.toml
+        return st.connection('mysql')
+    except Exception as e:
+        st.error(f"Failed to connect to database: {e}")
+        st.error("Please check your .streamlit/secrets.toml file and ensure it has the correct database credentials.")
+        return None
+
 def load_data_from_db():
-    conn = sqlite3.connect('ads.db')
+    """Load categories data from MySQL database"""
+    conn = init_connection()
+    
     query = """
         SELECT category AS Category, date_scrape AS Date, count AS Count
         FROM categories
     """
-    df = pd.read_sql(query, conn, parse_dates=['Date'])
-    conn.close()
-    return df
+    try:
+        df = conn.query(query, ttl="10m")
+        # Convert Date column to datetime if it's not already
+        if 'Date' in df.columns and not pd.api.types.is_datetime64_any_dtype(df['Date']):
+            df['Date'] = pd.to_datetime(df['Date'])
+        return df
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return pd.DataFrame()
 
 def filter_data_by_date_range(df, date_range):
     today = pd.Timestamp.today().normalize()
@@ -75,32 +95,66 @@ def display_table(df):
         st.info("Not enough data in the selected range to show trends.")
 
 def fetch_avg_price_per_year():
-    conn = sqlite3.connect('ads.db')
+    """Fetch average price per year data from MySQL database"""
+    conn = init_connection()
+    
     query = """
-        SELECT car_year, ROUND(AVG(CAST(price AS REAL)),0) as avg_price, 
-        ROUND(AVG(CAST(car_km AS INTEGER)),0) as avg_km,
+        SELECT car_year, ROUND(AVG(CAST(price AS DECIMAL(10,2))),0) as avg_price, 
+        ROUND(AVG(CAST(car_km AS UNSIGNED)),0) as avg_km,
         COUNT(id) as ads_count
         FROM cars
         GROUP BY car_year
         ORDER BY car_year;
     """
-    df = pd.read_sql(query, conn)
-    conn.close()
-    return df
+    try:
+        return conn.query(query, ttl="30m")
+    except Exception as e:
+        st.error(f"Error fetching average price data: {e}")
+        return pd.DataFrame()
 
 def fetch_all_ads():
-    conn = sqlite3.connect('ads.db')
+    """Fetch all ads data from MySQL database"""
+    conn = init_connection()
+    
     query = """
         SELECT *
         FROM cars
         ORDER BY date_scrape;
     """
-    df = pd.read_sql(query, conn)
-    conn.close()
-    return df
+    try:
+        return conn.query(query, ttl="30m")
+    except Exception as e:
+        st.error(f"Error fetching all ads: {e}")
+        return pd.DataFrame()
 
 
 
+# Initialize connection
+conn = init_connection()
+
+# Sidebar with app info
+with st.sidebar:
+    st.header("About")
+    st.write("Dacia Auto Kleinanzeigen Dashboard")
+    
+    # Simple database connection status indicator
+    if conn is not None:
+        try:
+            # Test connection with a simple query
+            test_result = conn.query("SELECT 1 as test", ttl="1m")
+            if not test_result.empty:
+                st.success("✅ Database connected")
+            else:
+                st.error("❌ Database connection issue")
+        except Exception:
+            st.error("❌ Database connection failed")
+    else:
+        st.error("❌ Database connection failed")
+    
+# Main content
+st.title("Dacia Auto Kleinanzeigen Dashboard")
+
+# Load data
 df = load_data_from_db()
 
 if not df.empty:
