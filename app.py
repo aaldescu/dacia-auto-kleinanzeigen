@@ -22,10 +22,7 @@ def load_data_from_db():
     """Load categories data from MySQL database"""
     conn = init_connection()
     
-    query = """
-        SELECT category AS Category, date_scrape AS Date, count AS Count
-        FROM categories
-    """
+    query = "SELECT category AS Category, date_scrape AS Date, count AS Count FROM categories"
     try:
         df = conn.query(query, ttl="10m")
         # Convert Date column to datetime if it's not already
@@ -98,14 +95,7 @@ def fetch_avg_price_per_year():
     """Fetch average price per year data from MySQL database"""
     conn = init_connection()
     
-    query = """
-        SELECT car_year, ROUND(AVG(CAST(price AS DECIMAL(10,2))),0) as avg_price, 
-        ROUND(AVG(CAST(car_km AS UNSIGNED)),0) as avg_km,
-        COUNT(id) as ads_count
-        FROM cars
-        GROUP BY car_year
-        ORDER BY car_year;
-    """
+    query = "SELECT car_year, ROUND(AVG(CAST(price AS DECIMAL(10,2))),0) as avg_price, ROUND(AVG(CAST(car_km AS UNSIGNED)),0) as avg_km, COUNT(id) as ads_count FROM cars GROUP BY car_year ORDER BY car_year;"
     try:
         return conn.query(query, ttl="30m")
     except Exception as e:
@@ -116,11 +106,7 @@ def fetch_all_ads():
     """Fetch all ads data from MySQL database"""
     conn = init_connection()
     
-    query = """
-        SELECT *
-        FROM cars
-        ORDER BY date_scrape;
-    """
+    query = "SELECT * FROM cars ORDER BY date_scrape;"
     try:
         return conn.query(query, ttl="30m")
     except Exception as e:
