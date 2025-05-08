@@ -24,7 +24,9 @@ def load_data_from_db():
     
     query = "SELECT category AS Category, date_scrape AS Date, count AS Count FROM categories"
     try:
-        df = conn.query(query, ttl="10m")
+        result = conn.query(query)
+        # Convert result to dataframe
+        df = pd.DataFrame(result)
         # Convert Date column to datetime if it's not already
         if 'Date' in df.columns and not pd.api.types.is_datetime64_any_dtype(df['Date']):
             df['Date'] = pd.to_datetime(df['Date'])
@@ -97,7 +99,8 @@ def fetch_avg_price_per_year():
     
     query = "SELECT car_year, ROUND(AVG(CAST(price AS DECIMAL(10,2))),0) as avg_price, ROUND(AVG(CAST(car_km AS UNSIGNED)),0) as avg_km, COUNT(id) as ads_count FROM cars GROUP BY car_year ORDER BY car_year;"
     try:
-        return conn.query(query, ttl="30m")
+        result = conn.query(query)
+        return pd.DataFrame(result)
     except Exception as e:
         st.error(f"Error fetching average price data: {e}")
         return pd.DataFrame()
@@ -108,7 +111,8 @@ def fetch_all_ads():
     
     query = "SELECT * FROM cars ORDER BY date_scrape;"
     try:
-        return conn.query(query, ttl="30m")
+        result = conn.query(query)
+        return pd.DataFrame(result)
     except Exception as e:
         st.error(f"Error fetching all ads: {e}")
         return pd.DataFrame()
@@ -128,7 +132,9 @@ with st.sidebar:
         try:
             # Test connection with a simple query
             test_result = conn.query('SELECT 1 as test')
-            if not test_result.empty:
+            # Convert to dataframe and check if it's empty
+            test_df = pd.DataFrame(test_result)
+            if not test_df.empty:
                 st.success("✅ Database connected")
             else:
                 st.error("❌ Database connection issue")
@@ -224,7 +230,3 @@ if not df.empty:
 
 else:
     st.write("No data available for displaying the bar chart.")
-
-
-
-    
