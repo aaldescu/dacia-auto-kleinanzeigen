@@ -133,7 +133,7 @@ with st.sidebar:
             # Test connection with a simple query
             test_result = conn.query('SELECT 1 as test')
             # Convert to dataframe and check if it's empty
-            test_df = pd.DataFrame(test_result)
+            test_df = st.dataframe(test_result)
             if not test_df.empty:
                 st.success("✅ Database connected")
             else:
