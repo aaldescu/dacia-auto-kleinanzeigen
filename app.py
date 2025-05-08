@@ -127,7 +127,7 @@ with st.sidebar:
     if conn is not None:
         try:
             # Test connection with a simple query
-            test_result = conn.query("SELECT 1 as test", ttl="1m")
+            test_result = conn.query('SELECT 1 as test', ttl="1m")
             if not test_result.empty:
                 st.success("✅ Database connected")
             else:
