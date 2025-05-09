@@ -2,11 +2,7 @@ rnet
 beautifulsoup4
 colorlog
 lxml
-plotly
-streamlit
 openai
 tqdm
-pandas
-numpy
 python-dotenv
 pymysql
