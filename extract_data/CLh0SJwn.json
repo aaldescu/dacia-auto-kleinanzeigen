@@ -1,0 +1,86 @@
+[
+    {
+        "id": "2729399784",
+        "ad_type": "offer",
+        "car_km": "203584 ",
+        "car_registration": " 08/2007",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/52/522f1795-60de-4f76-be8c-69dd1ead7460?rule=$_2.AUTO",
+        "location": "99085 Erfurt",
+        "date_posted": "08.04.2024",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Logan Prestige 1.6*Klima*T\u00dcV+SERVICE NEU",
+        "price": "2490 "
+    },
+    {
+        "id": "2720037468",
+        "ad_type": "offer",
+        "car_km": "177000 ",
+        "car_registration": " 11/2007",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/bf/bfb73f39-151b-4447-9efc-111b8aaedcb9?rule=$_2.AUTO",
+        "location": "07629 St Gangloff",
+        "date_posted": "29.03.2024",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Logan 1,5 DCI , Diesel , T\u00dcV neu , Top",
+        "price": "2950 "
+    },
+    {
+        "id": "2701615509",
+        "ad_type": "offer",
+        "car_km": "21400 ",
+        "car_registration": " 01/2023",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/95/95ddbd30-25c6-4e3e-ab46-961d4ec13782?rule=$_2.AUTO",
+        "location": "99425 Weimar",
+        "date_posted": "09.03.2024",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Spring electric mit CCS Sommer- und Winterreifen",
+        "price": "14499 \u20ac VB"
+    },
+    {
+        "id": "2650932565",
+        "ad_type": "offer",
+        "car_km": "65600 ",
+        "car_registration": " 07/2019",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/31/31bfc708-cc7e-4724-8cfc-86aa29cbfb8f?rule=$_2.AUTO",
+        "location": "99735 Werther bei Nordhausen",
+        "date_posted": "12.01.2024",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Duster 1.5 TCe Adventure KAMERA SITZH TOTWINKEL",
+        "price": "15980 "
+    },
+    {
+        "id": "2623219595",
+        "ad_type": "offer",
+        "car_km": "177000 ",
+        "car_registration": " 08/2007",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a747177-4edc-451a-b00f-48f448b72738?rule=$_2.AUTO",
+        "location": "07549 Gera",
+        "date_posted": "07.12.2023",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Logan 1,5 dCi / Diesel T\u00dcV neu",
+        "price": "2950 "
+    },
+    {
+        "id": "2622650355",
+        "ad_type": "offer",
+        "car_km": "67800 ",
+        "car_registration": " 07/2006",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ca/ca106dec-efe0-40d5-aa5c-04a044e9d569?rule=$_2.AUTO",
+        "location": "99817 Eisenach",
+        "date_posted": "06.12.2023",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Logan Laureate 1.6 Klima",
+        "price": "1999 "
+    },
+    {
+        "id": "2366780207",
+        "ad_type": "offer",
+        "car_km": "24000 ",
+        "car_registration": " 10/2017",
+        "image_src": "https://img.kleinanzeigen.de/api/v1/prod-ads/images/95/95b932cc-99d0-4663-92d7-5c692c804a1a?rule=$_2.AUTO",
+        "location": "04610 Meuselwitz",
+        "date_posted": "23.02.2023",
+        "date_scrape": "05/09/2025",
+        "title": "Dacia Sandero TCe 90 Stepway Celebration + ORIG 24 TKM",
+        "price": "10999 "
+    }
+]
