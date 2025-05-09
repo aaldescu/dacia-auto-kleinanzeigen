@@ -8,6 +8,7 @@ openai
 tqdm
 pandas
 numpy
-python-dotenv 
+python-dotenv
 pymysql
-SQLAlchemy==1.4.0
+SQLAlchemy
+mysqlclient
