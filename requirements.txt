@@ -10,5 +10,3 @@ pandas
 numpy
 python-dotenv
 pymysql
-SQLAlchemy
-mysqlclient
