@@ -32,14 +32,14 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Run dacia.py
-echo "Running dacia.py..."
-python dacia.py
+# Run extract_dacia.py
+echo "Running extract_dacia.py..."
+python extract_dacia.py
 if [ $? -eq 0 ]; then
-  echo "dacia.py completed successfully."
-  SUCCESS_MESSAGE+="- dacia.py: SUCCESS\n"
+  echo "extract_dacia.py completed successfully."
+  SUCCESS_MESSAGE+="- extract_dacia.py: SUCCESS\n"
 else
-  echo "Error: dacia.py encountered an issue."
+  echo "Error: extract_dacia.py encountered an issue."
   HAS_ERROR=1
   ERROR_MESSAGE+="- dacia.py failed to execute properly.\n"
   SUCCESS_MESSAGE+="- dacia.py: FAILED\n"
@@ -60,31 +60,31 @@ else
 fi
 echo "-----------------------------------"
 
-# Run get_ads.py
-echo "Running get_ads.py..."
-python get_ads.py
+# Run extract_dacia_ads.py
+echo "Running extract_dacia_ads.py..."
+python extract_dacia_ads.py
 if [ $? -eq 0 ]; then
-  echo "get_ads.py completed successfully."
-  SUCCESS_MESSAGE+="- get_ads.py: SUCCESS\n"
+  echo "extract_dacia_ads.py completed successfully."
+  SUCCESS_MESSAGE+="- extract_dacia_ads.py: SUCCESS\n"
 else
-  echo "Error: get_ads.py encountered an issue."
+  echo "Error: extract_dacia_ads.py encountered an issue."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- get_ads.py failed to execute properly.\n"
-  SUCCESS_MESSAGE+="- get_ads.py: FAILED\n"
+  ERROR_MESSAGE+="- extract_dacia_ads.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- extract_dacia_ads.py: FAILED\n"
 fi
 echo "-----------------------------------"
 
-# Run transform.py
-echo "Running transform.py..."
-python transform.py
+# Run transform_load.py
+echo "Running transform_load.py..."
+python transform_load.py
 if [ $? -eq 0 ]; then
-  echo "transform.py completed successfully."
-  SUCCESS_MESSAGE+="- transform.py: SUCCESS\n"
+  echo "transform_load.py completed successfully."
+  SUCCESS_MESSAGE+="- transform_load.py: SUCCESS\n"
 else
-  echo "Error: transform.py encountered an issue."
+  echo "Error: transform_load.py encountered an issue."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- transform.py failed to execute properly.\n"
-  SUCCESS_MESSAGE+="- transform.py: FAILED\n"
+  ERROR_MESSAGE+="- transform_load.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- transform_load.py: FAILED\n"
 fi
 echo "-----------------------------------"
 
