@@ -138,8 +138,20 @@ def clean_cars_data():
         # Drop the temporary datetime column
         df_clean = df_clean.drop('date_scrape_dt', axis=1)
         
+        # Set parameters
+        current_year = datetime.now().year
+
+        # Calculate derived features
+        df_clean['age'] = current_year - df_clean['car_year']
+        df_clean['price_per_km'] = df_clean['price'] / df_clean['km']
+        df_clean['price_per_year'] = df_clean['price'] / (df_clean['age'] + 1)  # +1 to avoid division by zero
+        
+        # Add a column to indicate if an ad is new (posted on the date the script is run)
+        today = datetime.now().strftime('%d/%m/%Y')
+        df_clean['is_new'] = df_clean['date_posted'].apply(lambda x: 'Yes' if x == today else 'No')
+        
         # Convert numeric columns to integers (removing decimals)
-        numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked']
+        numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked', 'age']
         for col in numeric_columns:
             # Convert to integer only if the column exists and has values
             if col in df_clean.columns and not df_clean[col].isna().all():
@@ -282,12 +294,19 @@ def export_to_csv(df, filename='cars_clean.csv'):
         # First, fill NaN values with appropriate placeholders
         export_df = export_df.fillna('')
         
-        # Convert numeric columns to integers for CSV export
-        numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked']
-        for col in numeric_columns:
+        # Convert integer columns to integers for CSV export
+        integer_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked', 'age']
+        for col in integer_columns:
             if col in export_df.columns:
                 # Only convert values that are not empty strings or NaN
                 export_df[col] = export_df[col].apply(lambda x: int(float(x)) if x != '' and not pd.isna(x) else '')
+        
+        # Round floating point columns to 2 decimal places
+        float_columns = ['price_per_km', 'price_per_year', 'price_diff_pct']
+        for col in float_columns:
+            if col in export_df.columns:
+                # Only convert values that are not empty strings or NaN
+                export_df[col] = export_df[col].apply(lambda x: round(float(x), 2) if x != '' and not pd.isna(x) else '')
         
         # Export to CSV without index
         export_df.to_csv(filename, index=False)
@@ -345,5 +364,17 @@ if __name__ == "__main__":
         # Average days tracked
         avg_days_tracked = cleaned_data['days_tracked'].mean()
         print(f"Average days tracked per ad: {avg_days_tracked:.1f} days")
+
+        # Average time on market
+        # Convert to numeric first to handle any string values
+        cleaned_data['time_on_market_num'] = pd.to_numeric(cleaned_data['time_on_market'], errors='coerce')
+        avg_time_on_market = cleaned_data['time_on_market_num'].mean()
+        print(f"Average time on market per ad: {avg_time_on_market:.1f} days")
+        
+        # Count of new ads
+        new_ads_count = (cleaned_data['is_new'] == 'Yes').sum()
+        new_ads_pct = (new_ads_count / len(cleaned_data)) * 100
+        print(f"New ads: {new_ads_count} ({new_ads_pct:.1f}%)")
+        
     else:
         print("\nNo data to preview or validate!")
