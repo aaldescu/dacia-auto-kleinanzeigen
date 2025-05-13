@@ -2,7 +2,6 @@ import os
 import pymysql
 import pandas as pd
 import re
-import numpy as np
 from datetime import datetime
 from dotenv import load_dotenv
 
@@ -41,6 +40,7 @@ def clean_cars_data():
     
     # Extract data from the original table
     try:
+        # Get all data from the cars table
         query = "SELECT * FROM cars"
         print(f"Executing query: {query}")
         cursor.execute(query)
@@ -53,111 +53,90 @@ def clean_cars_data():
             return pd.DataFrame()
         
         # Check if the first row contains column headers as values
-        first_row = df.iloc[0].to_dict()
+        first_row = df.iloc[0].to_dict() if not df.empty else {}
         if first_row.get('id') == 'id' and first_row.get('car_km') == 'car_km':
             print("First row appears to contain column headers - removing it")
             df = df.iloc[1:].reset_index(drop=True)
         
-        # Create a copy of the original dataframe to analyze price changes
-        df_original = df.copy()
+        # Process all data first
+        print("Processing all data...")
         
-        # Convert date_scrape to datetime for proper comparison
+        # Pre-process data in bulk
+        df['km'] = df['car_km'].apply(clean_km)
+        df['car_year_clean'] = df['car_year'].apply(clean_year)
+        df['price_clean'] = df['price'].apply(clean_price)
+        df['model'] = df['title'].apply(extract_dacia_model)
+        df['time_on_market'] = df.apply(lambda row: calculate_days_on_market(row['date_posted'], row['date_scrape']), axis=1)
+        
+        # Count occurrences of each ad_id for days_tracked
+        ad_id_counts = df['id'].value_counts().to_dict()
+        # Ensure days_tracked is at least 1 even if there's only one occurrence
+        df['days_tracked'] = df['id'].map(lambda x: max(1, ad_id_counts.get(x, 1)))
+        
+        # Convert date_scrape to datetime for sorting
         df['date_scrape_dt'] = pd.to_datetime(df['date_scrape'], format='%d/%m/%Y', errors='coerce')
         
-        # Get unique ad_ids
-        unique_ad_ids = df['id'].unique()
-        print(f"Found {len(unique_ad_ids)} unique Ad_ids")
+        # Create a new dataframe with the processed data
+        df_processed = pd.DataFrame({
+            'id': df['id'],
+            'ad_type': df['ad_type'],
+            'km': df['km'],
+            'car_year': df['car_year_clean'],
+            'image_src': df['image_src'],
+            'location': df['location'],
+            'zipcode': df['zipcode'],
+            'date_posted': df['date_posted'],
+            'date_scrape': df['date_scrape'],
+            'date_scrape_dt': df['date_scrape_dt'],
+            'title': df['title'],
+            'price': df['price_clean'],
+            'time_on_market': df['time_on_market'],
+            'model': df['model'],
+            'days_tracked': df['days_tracked']
+        })
         
-        # Create a dataframe to store the results
-        df_clean = pd.DataFrame()
+        # Calculate price changes
+        print("Analyzing price changes...")
         
-        # Process each ad_id
-        print("Processing each ad_id to calculate time_on_market and price changes...")
-        
-        # Lists to store data for each ad
-        all_ids = []
-        all_ad_types = []
-        all_kms = []
-        all_years = []
-        all_image_srcs = []
-        all_locations = []
-        all_zipcodes = []
-        all_date_posted = []
-        all_date_scrape = []
-        all_titles = []
-        all_prices = []
-        all_time_on_markets = []
-        all_models = []
-        all_price_changes = []
-        all_price_diff_amounts = []
-        all_price_diff_percentages = []
-        all_days_tracked = []
-        
-        for ad_id in unique_ad_ids:
-            # Get all rows for this ad_id
-            ad_rows = df[df['id'] == ad_id].copy()
-            
-            # Sort by date (newest first)
-            ad_rows = ad_rows.sort_values('date_scrape_dt', ascending=False)
-            
-            # Get the latest row
-            latest_row = ad_rows.iloc[0]
-            
-            # Calculate time_on_market
-            time_on_market = calculate_days_on_market(latest_row['date_posted'], latest_row['date_scrape'])
-            
-            # Extract Dacia model from title
-            model = extract_dacia_model(latest_row['title'])
-            
-            # Calculate days tracked
-            days_tracked = calculate_days_tracked(ad_id, df_original)
+        # Group by id to analyze price changes
+        price_changes = {}
+        for ad_id, group in df_processed.groupby('id'):
+            if len(group) > 1:
+                # Sort by date
+                group_sorted = group.sort_values('date_scrape_dt')
                 
-            # Determine price change
-            price_change, price_diff, price_pct = determine_price_change(ad_id, df_original)
-            
-            # Clean values
-            km = clean_km(latest_row['car_km'])
-            year = clean_year(latest_row['car_year'])
-            price = clean_price(latest_row['price'])
-            
-            # Append to lists
-            all_ids.append(latest_row['id'])
-            all_ad_types.append(latest_row['ad_type'])
-            all_kms.append(km)
-            all_years.append(year)
-            all_image_srcs.append(latest_row['image_src'])
-            all_locations.append(latest_row['location'])
-            all_zipcodes.append(latest_row['zipcode'])
-            all_date_posted.append(latest_row['date_posted'])
-            all_date_scrape.append(latest_row['date_scrape'])
-            all_titles.append(latest_row['title'])
-            all_prices.append(price)
-            all_time_on_markets.append(time_on_market)
-            all_models.append(model)
-            all_price_changes.append(price_change)
-            all_price_diff_amounts.append(price_diff)
-            all_price_diff_percentages.append(price_pct)
-            all_days_tracked.append(days_tracked)
+                # Get first and last price
+                first_price = group_sorted['price'].iloc[0]
+                last_price = group_sorted['price'].iloc[-1]
+                
+                if pd.notnull(first_price) and pd.notnull(last_price):
+                    price_diff = last_price - first_price
+                    price_pct = (price_diff / first_price) * 100 if first_price > 0 else 0
+                    
+                    if price_diff < 0:
+                        change = 'Decreased'
+                        price_changes[ad_id] = (change, abs(price_diff), round(abs(price_pct), 2))
+                    elif price_diff > 0:
+                        change = 'Increased'
+                        price_changes[ad_id] = (change, price_diff, round(price_pct, 2))
+                    else:
+                        price_changes[ad_id] = ('No Change', 0, 0)
+                else:
+                    price_changes[ad_id] = ('Unknown', None, None)
+            else:
+                price_changes[ad_id] = ('No Change', 0, 0)
         
-        # Create the cleaned dataframe
-        df_clean['id'] = all_ids
-        df_clean['ad_type'] = all_ad_types
-        df_clean['km'] = all_kms
-        df_clean['car_year'] = all_years
-        df_clean['image_src'] = all_image_srcs
-        df_clean['location'] = all_locations
-        df_clean['zipcode'] = all_zipcodes
-        df_clean['date_posted'] = all_date_posted
-        df_clean['date_scrape'] = all_date_scrape
-        df_clean['title'] = all_titles
-        df_clean['price'] = all_prices
-        df_clean['time_on_market'] = all_time_on_markets
-        df_clean['model'] = all_models
-        df_clean['price_change'] = all_price_changes
-        df_clean['price_diff'] = all_price_diff_amounts
-        df_clean['price_diff_pct'] = all_price_diff_percentages
-        df_clean['days_tracked'] = all_days_tracked
+        # Add price change information
+        df_processed['price_change'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[0])
+        df_processed['price_diff'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[1])
+        df_processed['price_diff_pct'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[2])
         
+        # Now keep only the latest version of each Ad_id
+        print("Keeping only the latest version of each Ad_id...")
+        df_clean = df_processed.sort_values('date_scrape_dt', ascending=False).groupby('id').first().reset_index()
+        
+        # Drop the temporary datetime column
+        df_clean = df_clean.drop('date_scrape_dt', axis=1)
         
         # Convert numeric columns to integers (removing decimals)
         numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked']
@@ -267,13 +246,6 @@ def calculate_days_on_market(date_posted, date_scrape):
     except Exception as e:
         return None
 
-def calculate_days_tracked(ad_id, df):
-    """Calculate days tracked by looking at all occurrences of the ad_id in the dataframe"""
-    # Get all occurrences of this ad_id from the dataframe
-    all_occurrences = df[df['id'] == ad_id].copy()
-    
-    return len(all_occurrences)
-
 def extract_dacia_model(title):
     """Extract Dacia model from the title"""
     if pd.isna(title) or title == '' or title is None:
@@ -300,46 +272,25 @@ def extract_dacia_model(title):
             
     return 'Other'
 
-def determine_price_change(ad_id, df):
-    """Determine if price has dropped, increased, or remained the same for an ad_id"""
-    # Get all rows for this ad_id
-    ad_rows = df[df['id'] == ad_id].copy()
-    
-    if len(ad_rows) <= 1:
-        return 'No Change', None, None
-    
-    # Convert date_scrape to datetime for sorting
-    ad_rows['date_scrape_dt'] = pd.to_datetime(ad_rows['date_scrape'], format='%d/%m/%Y', errors='coerce')
-    
-    # Sort by date (oldest to newest)
-    ad_rows = ad_rows.sort_values('date_scrape_dt')
-    
-    # Convert price to numeric
-    ad_rows['price_num'] = pd.to_numeric(ad_rows['price'], errors='coerce')
-    
-    # Get first and last price
-    first_price = ad_rows['price_num'].iloc[0]
-    last_price = ad_rows['price_num'].iloc[-1]
-    
-    # Calculate price difference
-    if pd.isna(first_price) or pd.isna(last_price):
-        return 'Unknown', None, None
-        
-    price_diff = last_price - first_price
-    price_pct = (price_diff / first_price) * 100 if first_price > 0 else 0
-    
-    if price_diff < 0:
-        return 'Decreased', abs(price_diff), round(abs(price_pct), 2)
-    elif price_diff > 0:
-        return 'Increased', price_diff, round(price_pct, 2)
-    else:
-        return 'No Change', 0, 0
 
 def export_to_csv(df, filename='cars_clean.csv'):
     """Export the cleaned data to a CSV file"""
     try:
+        # Create a copy for export to avoid modifying the original dataframe
+        export_df = df.copy()
+        
+        # First, fill NaN values with appropriate placeholders
+        export_df = export_df.fillna('')
+        
+        # Convert numeric columns to integers for CSV export
+        numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked']
+        for col in numeric_columns:
+            if col in export_df.columns:
+                # Only convert values that are not empty strings or NaN
+                export_df[col] = export_df[col].apply(lambda x: int(float(x)) if x != '' and not pd.isna(x) else '')
+        
         # Export to CSV without index
-        df.to_csv(filename, index=False)
+        export_df.to_csv(filename, index=False)
         print(f"Successfully exported data to {filename}")
         return True
     except Exception as e:
