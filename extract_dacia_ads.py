@@ -2,6 +2,7 @@ import asyncio
 import os
 import logging
 import colorlog
+from logging.handlers import RotatingFileHandler
 from rnet import Impersonate, Client
 from bs4 import BeautifulSoup
 import random
@@ -15,13 +16,30 @@ logger = logging.getLogger("scraper")
 handler = colorlog.StreamHandler()
 handler.setFormatter(colorlog.ColoredFormatter("%(log_color)s%(levelname)s:%(message)s"))
 logger.addHandler(handler)
+
+# File handler for errors only
+error_log_file = os.path.join(os.getcwd(), "scraper_errors.log")
+error_handler = RotatingFileHandler(
+    error_log_file,
+    maxBytes=5*1024*1024,  # 5MB max file size
+    backupCount=5,         # Keep 5 backup files
+    encoding='utf-8'
+)
+error_handler.setLevel(logging.ERROR)
+error_handler.setFormatter(logging.Formatter(
+    '%(asctime)s - %(levelname)s - %(message)s\n'
+))
+logger.addHandler(error_handler)
+
+
+# Set logging level overall
 logger.setLevel(logging.INFO)
 
 RESUME_FILE = "resume.json"
 BASE_URL = "https://www.kleinanzeigen.de"
 
-# Define the folder path
-# Ensure the directory exists
+
+# Ensure EXTRACT_DATA folder exists
 folder = os.path.join(os.getcwd(), "extract_data")
 os.makedirs(folder, exist_ok=True)
 
@@ -109,8 +127,13 @@ def extract_ads(html):
             
             ads.append(ad)    
         except Exception as e:
-            logger.error(f"Error processing ad: {e}", exc_info=True)
-
+            logger.error(
+                f"Error processing ad {ad_id} : {e}",
+                exc_info=True,
+                extra={
+                    'ad_id': ad['id'] or 'unknown'
+                }
+            )
     return ads
 
 def get_next_page(html):

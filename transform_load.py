@@ -1,8 +1,8 @@
 import os
 import json
-import re
 import pymysql
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -14,6 +14,63 @@ CATEGORY_DATA_FOLDER = 'extract_data_frontpage/'
 
 
 # --- Data Transformations ---
+def parse_german_date(date_str, scrape_date_str):
+    """Parse German date formats like 'Gestern, 12:05' or 'Heute, 15:30'.
+    
+    Args:
+        date_str: The date string to parse (e.g., 'Gestern, 12:05')
+        scrape_date_str: The date when the data was scraped (format: 'MM/DD/YYYY')
+        
+    Returns:
+        A formatted date string in 'DD/MM/YYYY' format
+    """
+    if not date_str or not scrape_date_str:
+        return None
+        
+    # Parse the scrape date
+    try:
+        scrape_date = datetime.strptime(scrape_date_str, "%m/%d/%Y")
+    except ValueError:
+        print(f"Invalid scrape date format: {scrape_date_str}")
+        return None
+    
+    # Handle German relative dates
+    if "Gestern" in date_str:  # Yesterday
+        base_date = scrape_date - timedelta(days=1)
+    elif "Heute" in date_str:  # Today
+        base_date = scrape_date
+    elif "Vorgestern" in date_str:  # Day before yesterday
+        base_date = scrape_date - timedelta(days=2)
+    elif re.match(r"\d{2}\.\d{2}\.\d{4}", date_str):  # Format: DD.MM.YYYY
+        try:
+            return datetime.strptime(date_str, "%d.%m.%Y").strftime("%d/%m/%Y")
+        except ValueError:
+            return None
+    else:
+        # Try to extract a date like "15.05.2023" from the string
+        date_match = re.search(r"(\d{1,2})\.(\d{1,2})\.", date_str)
+        if date_match:
+            day = int(date_match.group(1))
+            month = int(date_match.group(2))
+            year = scrape_date.year
+            
+            # If the extracted date is in the future, it's probably from last year
+            extracted_date = datetime(year, month, day)
+            if extracted_date > scrape_date:
+                extracted_date = datetime(year-1, month, day)
+                
+            return extracted_date.strftime("%d/%m/%Y")
+        return None
+    
+    # Extract time if available
+    time_match = re.search(r"(\d{1,2}):(\d{2})", date_str)
+    if time_match:
+        hour = int(time_match.group(1))
+        minute = int(time_match.group(2))
+        base_date = base_date.replace(hour=hour, minute=minute)
+    
+    return base_date.strftime("%d/%m/%Y")
+
 def transform_ad_data(ad):
     """Transform the ad data."""
     # Extract car year
@@ -23,13 +80,9 @@ def transform_ad_data(ad):
     match = re.search(r"^\d{5}", ad["location"])
     ad["zipcode"] = match.group(0) if match else None
 
-    # Format date_posted
-    if ad.get("date_posted"):
-        try:
-            date_obj = datetime.strptime(ad["date_posted"], "%d.%m.%Y")  # Parse old format
-            ad["date_posted"] = date_obj.strftime("%d/%m/%Y")  # Convert to new format
-        except ValueError:
-            ad["date_posted"] = None  # Handle invalid dates gracefully
+    # Format date_posted using the new German date parser
+    if ad.get("date_posted") and ad.get("date_scrape"):
+        ad["date_posted"] = parse_german_date(ad["date_posted"], ad["date_scrape"])
     
     return ad
 
