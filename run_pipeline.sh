@@ -6,6 +6,9 @@ ERROR_MESSAGE=""
 # Initialize success message
 SUCCESS_MESSAGE="Job Summary:\n"
 
+# Record start time
+START_TIME=$(date +%s)
+
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
@@ -123,13 +126,22 @@ echo "-----------------------------------"
 # Deactivate the virtual environment
 deactivate
 
+# Calculate execution time
+END_TIME=$(date +%s)
+EXECUTION_TIME=$((END_TIME - START_TIME))
+HOURS=$((EXECUTION_TIME / 3600))
+MINUTES=$(( (EXECUTION_TIME % 3600) / 60 ))
+SECONDS=$((EXECUTION_TIME % 60))
+TIME_MESSAGE="Total execution time: ${HOURS}h ${MINUTES}m ${SECONDS}s"
+echo "$TIME_MESSAGE"
+
 # Send email based on status
 if [ $HAS_ERROR -eq 1 ]; then
   SUBJECT="ERROR - Script processing pipeline"
-  BODY="Errors occurred during the processing pipeline:\n\n$ERROR_MESSAGE\n\nFull Job Summary:\n$SUCCESS_MESSAGE"
+  BODY="Errors occurred during the processing pipeline:\n\n$ERROR_MESSAGE\n\nFull Job Summary:\n$SUCCESS_MESSAGE\n\n$TIME_MESSAGE"
 else
   SUBJECT="SUCCESS - Script processing pipeline complete"
-  BODY="The processing pipeline completed successfully:\n\n$SUCCESS_MESSAGE"
+  BODY="The processing pipeline completed successfully:\n\n$SUCCESS_MESSAGE\n\n$TIME_MESSAGE"
 fi
 
 # Send the email

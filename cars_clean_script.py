@@ -66,7 +66,6 @@ def clean_cars_data():
         df['car_year_clean'] = df['car_year'].apply(clean_year)
         df['price_clean'] = df['price'].apply(clean_price)
         df['model'] = df['title'].apply(extract_dacia_model)
-        df['time_on_market'] = df.apply(lambda row: calculate_days_on_market(row['date_posted'], row['date_scrape']), axis=1)
         
         # Count occurrences of each ad_id for days_tracked
         ad_id_counts = df['id'].value_counts().to_dict()
@@ -90,20 +89,31 @@ def clean_cars_data():
             'date_scrape_dt': df['date_scrape_dt'],
             'title': df['title'],
             'price': df['price_clean'],
-            'time_on_market': df['time_on_market'],
             'model': df['model'],
             'days_tracked': df['days_tracked']
         })
         
         # Calculate price changes
-        print("Analyzing price changes...")
+        print("Analyzing price changes and time on market...")
         
-        # Group by id to analyze price changes
+        # Group by id to analyze price changes and time on market
         price_changes = {}
+        time_on_market_data = {}
         for ad_id, group in df_processed.groupby('id'):
             if len(group) > 1:
                 # Sort by date
                 group_sorted = group.sort_values('date_scrape_dt')
+                
+                # Get first and last scrape dates for time on market calculation
+                first_date = group_sorted['date_scrape_dt'].iloc[0]
+                last_date = group_sorted['date_scrape_dt'].iloc[-1]
+                
+                # Calculate time on market directly (in days)
+                days_on_market = (last_date - first_date).days
+                if days_on_market >= 0:  # Ensure it's not negative
+                    time_on_market_data[ad_id] = days_on_market
+                else:
+                    time_on_market_data[ad_id] = 0
                 
                 # Get first and last price
                 first_price = group_sorted['price'].iloc[0]
@@ -130,6 +140,7 @@ def clean_cars_data():
         df_processed['price_change'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[0])
         df_processed['price_diff'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[1])
         df_processed['price_diff_pct'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[2])
+        df_processed['time_on_market'] = df_processed['id'].map(time_on_market_data)
         
         # Now keep only the latest version of each Ad_id
         print("Keeping only the latest version of each Ad_id...")
@@ -241,23 +252,6 @@ def clean_price(value):
     except ValueError:
         return None
 
-def calculate_days_on_market(date_posted, date_scrape):
-    """Calculate days between posting and scraping"""
-    if pd.isna(date_posted) or pd.isna(date_scrape):
-        return None
-    
-    try:
-        # Based on our diagnostic, the format is DD/MM/YYYY
-        posted_date = datetime.strptime(str(date_posted).strip(), '%d/%m/%Y')
-        scrape_date = datetime.strptime(str(date_scrape).strip(), '%d/%m/%Y')
-        
-        days = (scrape_date - posted_date).days
-        if days >= 0:  # Ensure it's not negative
-            return days
-        return None
-    except Exception as e:
-        return None
-
 def extract_dacia_model(title):
     """Extract Dacia model from the title"""
     if pd.isna(title) or title == '' or title is None:
@@ -283,7 +277,6 @@ def extract_dacia_model(title):
             return model
             
     return 'Other'
-
 
 def export_to_csv(df, filename='cars_clean.csv'):
     """Export the cleaned data to a CSV file"""
