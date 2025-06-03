@@ -81,7 +81,6 @@ def clean_cars_data():
             'ad_type': df['ad_type'],
             'km': df['km'],
             'car_year': df['car_year_clean'],
-            'image_src': df['image_src'],
             'location': df['location'],
             'zipcode': df['zipcode'],
             'date_posted': df['date_posted'],
@@ -99,6 +98,8 @@ def clean_cars_data():
         # Group by id to analyze price changes and time on market
         price_changes = {}
         time_on_market_data = {}
+        first_seen_dates = {}  # Dictionary to track when each ad was first seen
+        
         for ad_id, group in df_processed.groupby('id'):
             if len(group) > 1:
                 # Sort by date
@@ -107,6 +108,9 @@ def clean_cars_data():
                 # Get first and last scrape dates for time on market calculation
                 first_date = group_sorted['date_scrape_dt'].iloc[0]
                 last_date = group_sorted['date_scrape_dt'].iloc[-1]
+                
+                # Store the first seen date for this ad
+                first_seen_dates[ad_id] = group_sorted['date_scrape'].iloc[0]
                 
                 # Calculate time on market directly (in days)
                 days_on_market = (last_date - first_date).days
@@ -135,12 +139,15 @@ def clean_cars_data():
                     price_changes[ad_id] = ('Unknown', None, None)
             else:
                 price_changes[ad_id] = ('No Change', 0, 0)
+                # For ads with only one occurrence, use the scrape date as first_seen
+                first_seen_dates[ad_id] = group['date_scrape'].iloc[0]
         
         # Add price change information
         df_processed['price_change'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[0])
         df_processed['price_diff'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[1])
         df_processed['price_diff_pct'] = df_processed['id'].map(lambda x: price_changes.get(x, ('Unknown', None, None))[2])
         df_processed['time_on_market'] = df_processed['id'].map(time_on_market_data)
+        df_processed['first_seen'] = df_processed['id'].map(first_seen_dates)  # Add first_seen column
         
         # Now keep only the latest version of each Ad_id
         print("Keeping only the latest version of each Ad_id...")
@@ -160,6 +167,9 @@ def clean_cars_data():
         # Add a column to indicate if an ad is new (posted on the date the script is run)
         today = datetime.now().strftime('%d/%m/%Y')
         df_clean['is_new'] = df_clean['date_posted'].apply(lambda x: 'Yes' if x == today else 'No')
+        
+        # Add a column to indicate if an ad was first seen today
+        df_clean['is_first_seen_today'] = df_clean['first_seen'].apply(lambda x: 'Yes' if x == today else 'No')
         
         # Convert numeric columns to integers (removing decimals)
         numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked', 'age']
@@ -368,6 +378,11 @@ if __name__ == "__main__":
         new_ads_count = (cleaned_data['is_new'] == 'Yes').sum()
         new_ads_pct = (new_ads_count / len(cleaned_data)) * 100
         print(f"New ads: {new_ads_count} ({new_ads_pct:.1f}%)")
+        
+        # Count of first seen today
+        first_seen_today_count = (cleaned_data['is_first_seen_today'] == 'Yes').sum()
+        first_seen_today_pct = (first_seen_today_count / len(cleaned_data)) * 100
+        print(f"Ads first seen today: {first_seen_today_count} ({first_seen_today_pct:.1f}%)")
         
     else:
         print("\nNo data to preview or validate!")

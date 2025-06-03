@@ -128,6 +128,58 @@ def analyze_new_listings(df):
     
     return new_listings
 
+def analyze_new_listings_trend(df):
+    """Analyze trend in new daily ads split by model"""
+    print("\n=== ANALYSIS: TREND IN NEW DAILY ADS BY MODEL ===")
+    
+    # Check if 'first_seen' column exists
+    if 'first_seen' not in df.columns:
+        print("Warning: 'first_seen' column not found in data. Cannot analyze new listings trend.")
+        return None
+    
+    # Convert first_seen to datetime if it's not already
+    df['first_seen'] = pd.to_datetime(df['first_seen'])
+    
+    # Group by first_seen date and model, count occurrences
+    df_trend = df.groupby([df['first_seen'].dt.date, 'model']).size().reset_index(name='count')
+    df_trend.rename(columns={'first_seen': 'date'}, inplace=True)
+    
+    # Sort by date
+    df_trend = df_trend.sort_values('date')
+    
+    # Get unique models and dates for plotting
+    models = df_trend['model'].unique()
+    
+    # Create a line chart for trend analysis
+    plt.figure(figsize=(14, 8))
+    
+    # Plot each model as a separate line
+    for model in models:
+        model_data = df_trend[df_trend['model'] == model]
+        plt.plot(model_data['date'], model_data['count'], marker='o', linewidth=2, label=model)
+    
+    plt.title('Trend in New Daily Ads by Model', fontsize=16)
+    plt.xlabel('Date', fontsize=14)
+    plt.ylabel('Number of New Ads', fontsize=14)
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(title='Model', fontsize=12)
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.savefig('reports/new_listings_trend_by_model.png')
+    
+    # Print summary of trends
+    print("Summary of new ads trend by model:")
+    for model in models:
+        model_data = df_trend[df_trend['model'] == model]
+        total_new = model_data['count'].sum()
+        avg_new = model_data['count'].mean()
+        max_new = model_data['count'].max()
+        max_date = model_data.loc[model_data['count'].idxmax(), 'date']
+        
+        print(f"{model}: Total: {total_new}, Avg: {avg_new:.1f} per day, Max: {max_new} on {max_date}")
+    
+    return df_trend
+
 def analyze_age_effects(df):
     """Analyze how age affects pricing and time on market"""
     print("\n=== ANALYSIS: AGE EFFECTS ON PRICING AND TIME ON MARKET ===")
@@ -282,8 +334,9 @@ def generate_report():
     
     # Run analyses
     model_speed = analyze_selling_speed(df)
-    price_per_km = analyze_price_per_km(df)
+    model_price_km = analyze_price_per_km(df)
     new_listings = analyze_new_listings(df)
+    new_listings_trend = analyze_new_listings_trend(df)
     age_effects = analyze_age_effects(df)
     model_comparison = generate_model_comparison(df)
     
@@ -319,7 +372,7 @@ def generate_report():
             <p>This report analyzes the Dacia car market based on {len(df)} listings. Key findings include:</p>
             <ul>
                 <li>The fastest selling Dacia model is {model_speed.iloc[0]['model']} with an average of {model_speed.iloc[0]['mean']:.1f} days on market.</li>
-                <li>The model with the highest price per kilometer is {price_per_km.iloc[0]['model']} at {price_per_km.iloc[0]['mean']:.3f}€/km.</li>
+                <li>The model with the highest price per kilometer is {model_price_km.iloc[0]['model']} at {model_price_km.iloc[0]['mean']:.3f}€/km.</li>
                 <li>There are {df['is_new'].value_counts().get('Yes', 0)} new listings ({(df['is_new'].value_counts().get('Yes', 0)/len(df))*100:.1f}% of total).</li>
                 <li>The most common model is {model_comparison.iloc[0]['model']} with {model_comparison.iloc[0]['count']} listings ({model_comparison.iloc[0]['market_share']:.1f}% market share).</li>
             </ul>
@@ -367,7 +420,7 @@ def generate_report():
     """
     
     # Add rows for price per km
-    for idx, row in price_per_km.iterrows():
+    for idx, row in model_price_km.iterrows():
         html_content += f"""
             <tr>
                 <td>{row['model']}</td>
@@ -411,6 +464,12 @@ def generate_report():
         </table>
         <div class="chart">
             <img src="new_listings_distribution.png" alt="New Listings Distribution Chart" style="max-width:100%;">
+        </div>
+        
+        <h3>New Listings Trend Analysis</h3>
+        <p>Trend in new daily ads by model over time:</p>
+        <div class="chart">
+            <img src="new_listings_trend_by_model.png" alt="New Listings Trend by Model Chart" style="max-width:100%;">
         </div>
         
         <h2>4. Age Effects on Pricing and Time on Market</h2>
