@@ -107,16 +107,7 @@ else
     HAS_ERROR=1
     ERROR_MESSAGE+="Failed to commit changes.\n"
   else
-    SUCCESS_MESSAGE+="Git: Changes committed successfully.\n"
-  fi
-
-  # Push the changes to the main branch
-  git push origin main
-  if [ $? -ne 0 ]; then
-    HAS_ERROR=1
-    ERROR_MESSAGE+="Failed to push changes to repository.\n"
-  else
-    SUCCESS_MESSAGE+="Git: Changes pushed to repository.\n"
+    SUCCESS_MESSAGE+="Git: Changes committed locally (no push).\n"
   fi
 fi
 
