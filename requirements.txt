@@ -6,3 +6,7 @@ openai
 tqdm
 python-dotenv
 pymysql
+scikit-learn
+pandas
+numpy
+joblib

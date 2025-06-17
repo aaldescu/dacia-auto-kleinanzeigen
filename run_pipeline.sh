@@ -91,28 +91,6 @@ else
 fi
 echo "-----------------------------------"
 
-# Git operations
-echo "Starting Git operations..."
-# Add all changed files
-git add .
-
-# Check if there are changes to commit
-if git diff-index --quiet HEAD --; then
-  echo "No changes to commit"
-  SUCCESS_MESSAGE+="Git: No changes detected to commit.\n"
-else
-  # Commit the changes with a message
-  git commit -m "Updated data $(date +"%Y-%m-%d %H:%M:%S")"
-  if [ $? -ne 0 ]; then
-    HAS_ERROR=1
-    ERROR_MESSAGE+="Failed to commit changes.\n"
-  else
-    SUCCESS_MESSAGE+="Git: Changes committed locally (no push).\n"
-  fi
-fi
-
-echo "Git operations completed."
-echo "-----------------------------------"
 
 # Deactivate the virtual environment
 deactivate

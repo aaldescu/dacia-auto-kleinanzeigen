@@ -178,3 +178,9 @@ cython_debug/
 
 .devcontainer
 
+# Model files (too large for GitHub)
+*.joblib
+dacia_price_model_*
+
+
+
