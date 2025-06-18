@@ -17,11 +17,11 @@ from datetime import datetime
 def train_model():
     print("Starting model training...")
     
-    # Load data from GitHub repository
-    url = 'https://raw.githubusercontent.com/aaldescu/dacia-auto-kleinanzeigen/refs/heads/main/cars_clean.csv'
+    # Load data from local CSV file
+    csv_path = "cars_clean.csv"
     
     try:
-        df = pd.read_csv(url)
+        df = pd.read_csv(csv_path)
         print(f"Data loaded successfully. Shape: {df.shape}")
     except Exception as e:
         print(f"Error loading data: {e}")
