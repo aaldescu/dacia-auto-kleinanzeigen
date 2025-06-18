@@ -101,8 +101,8 @@ def analyze_new_listings(df):
     print("\n=== ANALYSIS: NEW LISTINGS ===")
     print("Note: New listings are defined as ads posted on the date the script was run")
     
-    # Count new listings by model
-    new_listings = df[df['is_new'] == 'Yes'].groupby('model').size().reset_index(name='count')
+    # Analyze listings posted today by model
+    new_listings = df[df['posted_today'] == 'Yes'].groupby('model').size().reset_index(name='count')
     total_by_model = df.groupby('model').size().reset_index(name='total')
     
     # Merge to calculate percentages
@@ -114,7 +114,7 @@ def analyze_new_listings(df):
     for idx, row in new_listings.iterrows():
         print(f"{row['model']}: {row['count']} new listings ({row['percentage']:.1f}% of all {row['model']} listings)")
     
-    total_new = df['is_new'].value_counts().get('Yes', 0)
+    total_new = df['posted_today'].value_counts().get('Yes', 0)
     total_ads = len(df)
     print(f"\nTotal new listings: {total_new} ({(total_new/total_ads)*100:.1f}% of all listings)")
     
@@ -373,7 +373,7 @@ def generate_report():
             <ul>
                 <li>The fastest selling Dacia model is {model_speed.iloc[0]['model']} with an average of {model_speed.iloc[0]['mean']:.1f} days on market.</li>
                 <li>The model with the highest price per kilometer is {model_price_km.iloc[0]['model']} at {model_price_km.iloc[0]['mean']:.3f}€/km.</li>
-                <li>There are {df['is_new'].value_counts().get('Yes', 0)} new listings ({(df['is_new'].value_counts().get('Yes', 0)/len(df))*100:.1f}% of total).</li>
+                <li>There are {df['posted_today'].value_counts().get('Yes', 0)} listings posted today ({(df['posted_today'].value_counts().get('Yes', 0)/len(df))*100:.1f}% of total).</li>
                 <li>The most common model is {model_comparison.iloc[0]['model']} with {model_comparison.iloc[0]['count']} listings ({model_comparison.iloc[0]['market_share']:.1f}% market share).</li>
             </ul>
         </div>

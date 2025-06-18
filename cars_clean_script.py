@@ -166,10 +166,8 @@ def clean_cars_data():
         
         # Add a column to indicate if an ad is new (posted on the date the script is run)
         today = datetime.now().strftime('%d/%m/%Y')
-        df_clean['is_new'] = df_clean['date_posted'].apply(lambda x: 'Yes' if x == today else 'No')
-        
-        # Add a column to indicate if an ad was first seen today
-        df_clean['is_first_seen_today'] = df_clean['first_seen'].apply(lambda x: 'Yes' if x == today else 'No')
+        # Mark listings that were posted today
+        df_clean['posted_today'] = df_clean['date_posted'].apply(lambda x: 'Yes' if x == today else 'No')
         
         # Convert numeric columns to integers (removing decimals)
         numeric_columns = ['km', 'car_year', 'price', 'time_on_market', 'price_diff', 'days_tracked', 'age']
@@ -374,15 +372,14 @@ if __name__ == "__main__":
         avg_time_on_market = cleaned_data['time_on_market_num'].mean()
         print(f"Average time on market per ad: {avg_time_on_market:.1f} days")
         
-        # Count of new ads
-        new_ads_count = (cleaned_data['is_new'] == 'Yes').sum()
-        new_ads_pct = (new_ads_count / len(cleaned_data)) * 100
-        print(f"New ads: {new_ads_count} ({new_ads_pct:.1f}%)")
+        # Print some statistics about the data
+        total_ads = len(cleaned_data)
+        posted_today_count = (cleaned_data['posted_today'] == 'Yes').sum()
+        price_change_count = (cleaned_data['price_change'] != 'No Change').sum()
         
-        # Count of first seen today
-        first_seen_today_count = (cleaned_data['is_first_seen_today'] == 'Yes').sum()
-        first_seen_today_pct = (first_seen_today_count / len(cleaned_data)) * 100
-        print(f"Ads first seen today: {first_seen_today_count} ({first_seen_today_pct:.1f}%)")
+        print(f"Total ads: {total_ads}")
+        print(f"Ads posted today: {posted_today_count}")
+        print(f"Ads with price changes: {price_change_count}")
         
     else:
         print("\nNo data to preview or validate!")

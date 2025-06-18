@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Model Training Script for Dacia Price Prediction
+XGBoost Model Training Script for Dacia Price Prediction
 """
 
 import pandas as pd
 import numpy as np
-from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -14,8 +14,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 import joblib
 from datetime import datetime
 
-def train_model():
-    print("Starting model training...")
+def train_model_xgboost():
+    print("Starting XGBoost model training...")
     
     # Load data from local CSV file
     csv_path = "cars_clean.csv"
@@ -56,27 +56,34 @@ def train_model():
         ('text', Pipeline([('vect', text_transformer)]), text_col)
     ], remainder='passthrough')
     
-    # Create and train model
+    # Create and train model with XGBoost instead of RandomForest
     model = Pipeline([
         ('prep', preprocessor),
-        ('reg', RandomForestRegressor(n_estimators=100, random_state=42))
+        ('reg', XGBRegressor(
+            n_estimators=100,
+            learning_rate=0.1,
+            max_depth=5,
+            subsample=0.8,
+            colsample_bytree=0.8,
+            random_state=42
+        ))
     ])
     
-    print("Training model...")
+    print("Training XGBoost model...")
     model.fit(X, y)
-    print("Model training completed!")
+    print("XGBoost model training completed!")
     
     # Save the model
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    model_filename = f"dacia_price_model_{timestamp}.joblib"
+    model_filename = f"dacia_price_model_xgboost_{timestamp}.joblib"
     joblib.dump(model, model_filename)
-    print(f"Model saved as {model_filename}")
+    print(f"XGBoost model saved as {model_filename}")
     
-    # Also save as latest model for easy reference
-    joblib.dump(model, "dacia_price_model_latest.joblib")
-    print("Model also saved as dacia_price_model_latest.joblib")
+    # Also save as latest XGBoost model for easy reference
+    joblib.dump(model, "dacia_price_model_xgboost_latest.joblib")
+    print("XGBoost model also saved as dacia_price_model_xgboost_latest.joblib")
     
     return model
 
 if __name__ == "__main__":
-    train_model()
+    train_model_xgboost()

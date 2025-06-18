@@ -39,9 +39,9 @@ def find_best_deals():
         print(f"Error loading data: {e}")
         return None
     
-    # Filter new listings
-    df_new = df[df['is_new'] == 'Yes'][['km', 'car_year', 'model', 'time_on_market', 'zipcode', 'title']].copy()
-    print(f"New listings filtered. Count: {len(df_new)}")
+    # Filter listings posted today
+    df_new = df[df['posted_today'] == 'Yes'][['km', 'car_year', 'model', 'time_on_market', 'zipcode', 'title']].copy()
+    print(f"Listings posted today filtered. Count: {len(df_new)}")
     
     # Handle missing values
     df_new['time_on_market'] = df_new['time_on_market'].fillna(0)
@@ -49,7 +49,7 @@ def find_best_deals():
     print(f"After removing rows with missing values: {len(df_new)}")
     
     if len(df_new) == 0:
-        print("No new listings found after filtering.")
+        print("No listings posted today found after filtering.")
         return None
     
     # Prepare data for prediction
@@ -63,9 +63,9 @@ def find_best_deals():
         print(f"Error during price prediction: {e}")
         return None
     
-    # Get additional columns from the original dataframe
-    other_columns = [col for col in df.columns if col not in df_new.columns]
-    temp_df = df[df['is_new'] == 'Yes'][other_columns].copy()
+    # Get additional columns for the report
+    other_columns = ['id', 'price', 'title', 'location']
+    temp_df = df[df['posted_today'] == 'Yes'][other_columns].copy()
     
     # Merge dataframes
     df_new = pd.concat([df_new, temp_df], axis=1)

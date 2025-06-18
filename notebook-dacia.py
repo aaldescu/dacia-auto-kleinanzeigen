@@ -34,7 +34,7 @@ import pandas as pd
 import numpy as np
 
 # Filtrare mașini second-hand
-df_model = df[df['is_new'] == 'No'][['price', 'km', 'car_year', 'model', 'time_on_market', 'zipcode', 'title']].copy()
+df_model = df[df['posted_today'] == 'No'][['price', 'km', 'car_year', 'model', 'time_on_market', 'zipcode', 'title']].copy()
 
 print(len(df_model))
 
@@ -95,7 +95,7 @@ model = Pipeline([
 # Antrenare model
 model.fit(X, y)
 
-df_new = df[df['is_new'] == 'Yes'][['km', 'car_year', 'model', 'time_on_market', 'zipcode','title']].copy()
+df_new = df[df['posted_today'] == 'Yes'][['km', 'car_year', 'model', 'time_on_market', 'zipcode','title']].copy()
 
 print (len(df_new) )
 
@@ -121,11 +121,9 @@ df_new
 # prompt: bring into df_new all other columns from the df
 
 
-# Get the columns from df that are not in df_new
-other_columns = [col for col in df.columns if col not in df_new.columns]
-
-# Create a temporary DataFrame with the desired columns
-temp_df = df[df['is_new'] == 'Yes'][other_columns].copy()
+# Get additional columns from the original dataframe
+other_columns = ['id', 'price', 'title', 'location']
+temp_df = df[df['posted_today'] == 'Yes'][other_columns].copy()
 
 # Concatenate df_new with temp_df along the columns (axis=1)
 df_new = pd.concat([df_new, temp_df], axis=1)
