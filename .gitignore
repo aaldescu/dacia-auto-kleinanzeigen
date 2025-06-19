@@ -182,5 +182,13 @@ cython_debug/
 *.joblib
 dacia_price_model_*
 
+# Resume files
+resume.json
+resume_detailed.json
+
+# Extracted data files
+extract_data
+extract_data_detailed
+extract_data_frontpage
 
 
