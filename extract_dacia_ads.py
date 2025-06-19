@@ -101,7 +101,8 @@ def extract_ads(html):
             bottom_tags = li.select('.aditem-main--bottom span')
 
             ad['id'] = li['data-adid']
-
+            ad['href'] = li['data-href']
+            
             # each ad has bottom tags, when 3 tags the first is Gesuch, when 2 the first one is KM.
             match len(bottom_tags):
                 case 3:

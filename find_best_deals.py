@@ -17,7 +17,7 @@ def find_best_deals():
     print("Starting best deals search...")
     
     # Load the latest trained model
-    model_path = "dacia_price_model_latest.joblib"
+    model_path = "dacia_price_model_xgboost_latest.joblib"
     if not os.path.exists(model_path):
         print(f"Error: Model file {model_path} not found. Please run train_model.py first.")
         return None

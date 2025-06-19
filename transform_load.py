@@ -131,6 +131,7 @@ def create_table():
                     date_scrape VARCHAR(20),
                     title TEXT,
                     price VARCHAR(20),
+                    href TEXT,
                     PRIMARY KEY (id, date_scrape)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             """)
@@ -168,6 +169,7 @@ def insert_ad(ad):
     try:
         with conn.cursor() as cursor:
             # Ensure missing values are handled
+            ad['href'] = ad.get('href', None)  # Set to None if missing
             ad['image_src'] = ad.get('image_src', None)  # Set to None if missing
             ad['location'] = ad.get('location', None)  # Set to None if missing
             ad['zipcode'] = ad.get('zipcode', None)  # Set to None if missing
@@ -178,8 +180,8 @@ def insert_ad(ad):
             ad['car_year'] = ad.get('car_year', None)  # Set to None if missing
 
             cursor.execute("""
-                INSERT INTO cars (id, ad_type, car_km, car_registration, car_year, image_src, location, zipcode, date_posted, date_scrape, title, price)
-                VALUES (%(id)s, %(ad_type)s, %(car_km)s, %(car_registration)s, %(car_year)s, %(image_src)s, %(location)s, %(zipcode)s, %(date_posted)s, %(date_scrape)s, %(title)s, %(price)s)
+                INSERT INTO cars (id, ad_type, car_km, car_registration, car_year, image_src, location, zipcode, date_posted, date_scrape, title, price, href)
+                VALUES (%(id)s, %(ad_type)s, %(car_km)s, %(car_registration)s, %(car_year)s, %(image_src)s, %(location)s, %(zipcode)s, %(date_posted)s, %(date_scrape)s, %(title)s, %(price)s, %(href)s)
                 ON DUPLICATE KEY UPDATE
                 ad_type = VALUES(ad_type),
                 car_km = VALUES(car_km),
@@ -190,7 +192,8 @@ def insert_ad(ad):
                 zipcode = VALUES(zipcode),
                 date_posted = VALUES(date_posted),
                 title = VALUES(title),
-                price = VALUES(price)
+                price = VALUES(price),
+                href = VALUES(href)
             """, ad)
         conn.commit()
         print(f"Inserted/updated ad {ad['id']} successfully.")
