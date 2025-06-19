@@ -36,6 +36,7 @@ logger.setLevel(logging.INFO)
 
 RESUME_FILE = "resume_detailed.json"
 BASE_URL = "https://www.kleinanzeigen.de"
+DETAILED_AD_URLS_FILE = "urls_detailed_ad.txt"
 
 # Ensure EXTRACT_DATA folder exists
 folder = os.path.join(os.getcwd(), "extract_data_detailed")
@@ -225,11 +226,12 @@ async def main():
     """Start the scraping process."""
     logger.info("Starting scraper...")
     
-    # List of start URLs for different regions
-    start_urls = [
-        "https://www.kleinanzeigen.de/s-anzeige/renault-kangoo-rapid-extra-1-6-benzin-1-hand-53-000km-/3114014545-216-7905",
-        "https://www.kleinanzeigen.de/s-anzeige/renault-kangoo-1-4/3114507393-216-1353"
-    ]
+    # start URLs 
+    # start_urls variable is populated from file urls_detailed_ad.txt 
+    start_urls = []
+    with open(DETAILED_AD_URLS_FILE, "r", encoding="utf-8") as f:
+        for line in f:
+            start_urls.append(line.strip())
 
     # Load resume point
     resume_url, start_url_index = load_resume_point()
@@ -279,6 +281,11 @@ async def main():
     if os.path.exists(RESUME_FILE):
         os.remove(RESUME_FILE)
         logger.info("Resume point has been reset for the next run.")
+    
+    # Delete the DETAILED_AD_URLS_FILE
+    if os.path.exists(DETAILED_AD_URLS_FILE):
+        os.remove(DETAILED_AD_URLS_FILE)
+        logger.info("Deleted DETAILED_AD_URLS_FILE")
 
 if __name__ == "__main__":
     asyncio.run(main())
