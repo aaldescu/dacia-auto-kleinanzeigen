@@ -21,7 +21,7 @@ git pull origin main
 if [ $? -ne 0 ]; then
   HAS_ERROR=1
   ERROR_MESSAGE+="Failed to pull latest changes from git repository.\n"
-  echo -e "Subject:ERROR - Cannot pull from git\n\nFailed to pull the latest changes from the git repository." | msmtp andrei.aldescu@yahoo.com
+  echo -e "Subject:ERROR - Cannot pull from git\n\nFailed to pull the latest changes from the git repository.\n\nContinuing with local version..." | msmtp andrei.aldescu@yahoo.com
   echo "Continuing with local version..."
 fi
 
