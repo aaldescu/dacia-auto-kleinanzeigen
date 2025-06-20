@@ -183,6 +183,7 @@ cython_debug/
 dacia_price_model_*
 
 # Resume files
+resume.txt
 resume.json
 resume_detailed.json
 

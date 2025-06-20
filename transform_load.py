@@ -5,13 +5,72 @@ import re
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
 
+# Constants
+EXTRACT_DATA_FOLDER = "extract_data"
+DETAILED_DATA_FOLDER = "extract_data_detailed"
+SQL_MIGRATION_FOLDER = "sqlmigration"
+CATEGORY_DATA_FOLDER = "extract_data_frontpage"
+
+# Ensure  folder exists
+os.makedirs(SQL_MIGRATION_FOLDER, exist_ok=True)
+os.makedirs(DETAILED_DATA_FOLDER, exist_ok=True)
+os.makedirs(EXTRACT_DATA_FOLDER, exist_ok=True)
+os.makedirs(CATEGORY_DATA_FOLDER, exist_ok=True)
+
+# Define mapping from JSON keys to database column names
+FIELD_MAPPING = {
+    'ad_id': 'ad_id',
+    'seller_name': 'seller_name',
+    'seller_type': 'seller_type',
+    'active_since': 'active_since',
+    'Marke': 'marke',
+    'Modell': 'modell',
+    'Kilometerstand': 'kilometerstand',
+    'Fahrzeugzustand': 'fahrzeugzustand',
+    'Erstzulassung': 'erstzulassung',
+    'Kraftstoffart': 'kraftstoffart',
+    'Leistung': 'leistung',
+    'Getriebe': 'getriebe',
+    'Fahrzeugtyp': 'fahrzeugtyp',
+    'Anzahl Türen': 'anzahl_tueren',
+    'Umweltplakette': 'umweltplakette',
+    'Schadstoffklasse': 'schadstoffklasse',
+    'Außenfarbe': 'aussenfarbe',
+    'Material Innenausstattung': 'material_innenausstattung',
+    'extras': 'extras',
+    'description': 'description',
+    'title': 'title',
+    'price': 'price',
+    'date_scrape': 'date_scrape',
+    'HU bis': 'hu_bis',
+    'HU Monat': 'hu_monat',
+    'Art': 'art'
+}
+
+# Reverse mapping for SQL migration generation
+GERMAN_TO_DB_FIELD_MAPPING = {
+    'Marke': 'marke',
+    'Modell': 'modell',
+    'Kilometerstand': 'kilometerstand',
+    'Fahrzeugzustand': 'fahrzeugzustand',
+    'Erstzulassung': 'erstzulassung',
+    'Kraftstoffart': 'kraftstoffart',
+    'Leistung': 'leistung',
+    'Getriebe': 'getriebe',
+    'Fahrzeugtyp': 'fahrzeugtyp',
+    'Anzahl Türen': 'anzahl_tueren',
+    'Umweltplakette': 'umweltplakette',
+    'Schadstoffklasse': 'schadstoffklasse',
+    'Außenfarbe': 'aussenfarbe',
+    'Material Innenausstattung': 'material_innenausstattung',
+    'HU bis': 'hu_bis',
+    'HU Monat': 'hu_monat',
+    'Art': 'art',
+}
+
 # Load environment variables
 load_dotenv()
-
-# Path to the folder containing JSON files
-DATA_FOLDER = 'extract_data/'
-CATEGORY_DATA_FOLDER = 'extract_data_frontpage/'
-DETAILED_DATA_FOLDER = 'extract_data_detailed/' 
+ 
 
 
 # --- Data Transformations ---
@@ -108,6 +167,7 @@ def get_db_connection():
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
+        print(f"Connected to MySQL database: {DB_NAME}")
         return connection
     except Exception as e:
         print(f"Error connecting to MySQL database: {e}")
@@ -189,6 +249,7 @@ def create_detailed_table():
                     schadstoffklasse VARCHAR(50),
                     aussenfarbe VARCHAR(50),
                     material_innenausstattung VARCHAR(50),
+                    hu_bis VARCHAR(50),
                     extras TEXT,
                     description TEXT,
                     title TEXT,
@@ -215,24 +276,6 @@ def insert_detailed_ad(ad):
         # Handle extras field which is a list in JSON
         if 'extras' in ad and isinstance(ad['extras'], list):
             ad['extras'] = ', '.join(ad['extras'])
-            
-        # Map JSON keys to database column names (converting German field names to lowercase)
-        field_mapping = {
-            'Marke': 'marke',
-            'Modell': 'modell',
-            'Kilometerstand': 'kilometerstand',
-            'Fahrzeugzustand': 'fahrzeugzustand',
-            'Erstzulassung': 'erstzulassung',
-            'Kraftstoffart': 'kraftstoffart',
-            'Leistung': 'leistung',
-            'Getriebe': 'getriebe',
-            'Fahrzeugtyp': 'fahrzeugtyp',
-            'Anzahl Türen': 'anzahl_tueren',
-            'Umweltplakette': 'umweltplakette',
-            'Schadstoffklasse': 'schadstoffklasse',
-            'Außenfarbe': 'aussenfarbe',
-            'Material Innenausstattung': 'material_innenausstattung'
-        }
         
         # Create a new dictionary with mapped keys
         mapped_ad = {
@@ -248,7 +291,7 @@ def insert_detailed_ad(ad):
         }
         
         # Map German field names to database column names
-        for german_key, db_key in field_mapping.items():
+        for german_key, db_key in GERMAN_TO_DB_FIELD_MAPPING.items():
             if german_key in ad:
                 mapped_ad[db_key] = ad[german_key]
             else:
@@ -280,10 +323,12 @@ def insert_detailed_ad(ad):
             
         conn.commit()
         print(f"Inserted/updated detailed ad {ad.get('ad_id')} successfully.")
+        conn.close()
+        return True
     except Exception as e:
         print(f"Error inserting detailed ad: {e}")
-    finally:
         conn.close()
+        return False
 
 
 def insert_ad(ad):
@@ -320,12 +365,16 @@ def insert_ad(ad):
             """, ad)
         conn.commit()
         print(f"Inserted/updated ad {ad['id']} successfully.")
+        conn.close()
+        return True
     except pymysql.err.IntegrityError:
         print(f"Ad {ad['id']} already exists for the same scrape time, skipping.")
+        conn.close()
+        return False
     except Exception as e:
         print(f"Error inserting ad {ad['id']}: {e}")
-    finally:
         conn.close()
+        return False
 
 def insert_category(ad):
     """Insert a category count into the database, allowing blanks for missing values."""
@@ -354,14 +403,14 @@ def insert_category(ad):
     finally:
         conn.close()
 
-def load_json_files_and_insert():
+def load_ads_json_files_and_insert():
     """Load all .json files from the folder and insert their data into the database."""
     # List all .json files in the directory
-    json_files = [f for f in os.listdir(DATA_FOLDER) if f.endswith('.json')]
+    json_files = [f for f in os.listdir(EXTRACT_DATA_FOLDER) if f.endswith('.json')]
     
     # Loop through each file
     for json_file in json_files:
-        file_path = os.path.join(DATA_FOLDER, json_file)
+        file_path = os.path.join(EXTRACT_DATA_FOLDER, json_file)
         
         try:
             # Open and load JSON data from file
@@ -414,15 +463,85 @@ def get_detailed_table_columns():
     """Get the column names from the detailed table in the database."""
     conn = get_db_connection()
     columns = []
+    
+    # Try method 1: SHOW COLUMNS
     try:
         with conn.cursor() as cursor:
             cursor.execute("SHOW COLUMNS FROM detailed")
-            columns = [row[0] for row in cursor.fetchall()]
+            
+            raw_results = cursor.fetchall()
+            
+            # Extract column names from the 'Field' key in each dictionary
+            columns = [row['Field'] for row in raw_results]
+            
+            if columns:
+                print(f"Successfully retrieved {len(columns)} columns using SHOW COLUMNS")
+                conn.close()
+                return columns
     except Exception as e:
-        print(f"Error getting columns from detailed table: {e}")
-    finally:
+        print(f"Error with SHOW COLUMNS method: {e}")
         conn.close()
-    return columns
+        return columns
+
+def generate_sql_migration(new_columns):
+    """Generate SQL migration file for new columns.
+    
+    Args:
+        new_columns: List of new column names found in JSON data
+    """
+    if not new_columns:
+        return
+    
+    timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    migration_filename = f"{timestamp}_add_columns_to_detailed.sql"
+    migration_path = os.path.join(SQL_MIGRATION_FOLDER, migration_filename)
+    
+    # Generate SQL statements
+    sql_statements = []
+    for column in new_columns:
+        # Convert the JSON key to a database column name
+        if column in GERMAN_TO_DB_FIELD_MAPPING:
+            db_column = GERMAN_TO_DB_FIELD_MAPPING[column]
+        else:
+            # Convert to snake_case if not in mapping
+            db_column = column.lower().replace(' ', '_')
+        
+        # Add to field mapping for future use
+        if column not in FIELD_MAPPING:
+            FIELD_MAPPING[column] = db_column
+        
+        if column not in GERMAN_TO_DB_FIELD_MAPPING and column[0].isupper():
+            GERMAN_TO_DB_FIELD_MAPPING[column] = db_column
+            
+        # Default to VARCHAR(100) for new columns
+        sql_statements.append(f"ALTER TABLE detailed ADD COLUMN {db_column} VARCHAR(100);")
+    
+    # Write SQL statements to file
+    with open(migration_path, 'w') as f:
+        f.write("-- Auto-generated migration for new columns in detailed table\n")
+        f.write(f"-- Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write("--\n")
+        f.write("-- IMPORTANT: After executing this SQL, please also update the mapping constants in transform_load.py:\n")
+        f.write("--\n")
+        
+        # Add mapping suggestions for each new column
+        f.write("-- 1. Add to FIELD_MAPPING:\n")
+        for column in new_columns:
+            db_column = column.lower().replace(' ', '_') if column not in GERMAN_TO_DB_FIELD_MAPPING else GERMAN_TO_DB_FIELD_MAPPING[column]
+            f.write(f"--    '{column}': '{db_column}',\n")
+        
+        f.write("--\n")
+        f.write("-- 2. Add to GERMAN_TO_DB_FIELD_MAPPING:\n")
+        for column in new_columns:
+            if column[0].isupper():  # Only suggest German mappings for capitalized fields
+                db_column = column.lower().replace(' ', '_') if column not in GERMAN_TO_DB_FIELD_MAPPING else GERMAN_TO_DB_FIELD_MAPPING[column]
+                f.write(f"--    '{column}': '{db_column}',\n")
+        
+        f.write("\n")
+        f.write("\n".join(sql_statements))
+    
+    print(f"Generated SQL migration file: {migration_path}")
+    print("Please review and execute this SQL file to update your database schema.")
 
 def check_json_structure_compatibility(ad_data, db_columns):
     """Check if the JSON structure is compatible with the database table.
@@ -436,52 +555,26 @@ def check_json_structure_compatibility(ad_data, db_columns):
             is_compatible: True if compatible, False if new columns found
             new_columns: List of new columns found in the JSON data
     """
-    # Define mapping from JSON keys to database column names
-    field_mapping = {
-        'ad_id': 'ad_id',
-        'seller_name': 'seller_name',
-        'seller_type': 'seller_type',
-        'active_since': 'active_since',
-        'Marke': 'marke',
-        'Modell': 'modell',
-        'Kilometerstand': 'kilometerstand',
-        'Fahrzeugzustand': 'fahrzeugzustand',
-        'Erstzulassung': 'erstzulassung',
-        'Kraftstoffart': 'kraftstoffart',
-        'Leistung': 'leistung',
-        'Getriebe': 'getriebe',
-        'Fahrzeugtyp': 'fahrzeugtyp',
-        'Anzahl Türen': 'anzahl_tueren',
-        'Umweltplakette': 'umweltplakette',
-        'Schadstoffklasse': 'schadstoffklasse',
-        'Außenfarbe': 'aussenfarbe',
-        'Material Innenausstattung': 'material_innenausstattung',
-        'extras': 'extras',
-        'description': 'description',
-        'title': 'title',
-        'price': 'price',
-        'date_scrape': 'date_scrape'
-    }
-    
     # Check for new columns in the JSON data
     new_columns = []
     for key in ad_data.keys():
         # Skip standard fields that we already know about
-        if key in field_mapping or key == 'date_scrape':
+        if key in FIELD_MAPPING or key == 'date_scrape':
             continue
             
         # Check if this key maps to a column in the database
-        db_column = field_mapping.get(key)
+        db_column = FIELD_MAPPING.get(key)
         if db_column is None or db_column not in db_columns:
             new_columns.append(key)
+    
+    # Generate SQL migration file if new columns are found
+    if new_columns:
+        generate_sql_migration(new_columns)
     
     return len(new_columns) == 0, new_columns
 
 def load_detailed_files_and_insert():
     """Load all detailed ad .json files and insert them into the database."""
-    # Create detailed table if it doesn't exist
-    create_detailed_table()
-    
     # Get the column names from the database table
     db_columns = get_detailed_table_columns()
     if not db_columns:
@@ -527,15 +620,17 @@ def load_detailed_files_and_insert():
                 ad['date_scrape'] = datetime.now().strftime("%Y-%m-%d")
                 
             # Insert into database
-            insert_detailed_ad(ad)
-            processed_count += 1
+            if insert_detailed_ad(ad):
+                processed_count += 1
+                print(f"Processed detailed ad {json_file} successfully.")
             
-            print(f"Processed detailed ad {json_file} successfully.")
-            
-            # Delete the JSON file after successful processing
-            os.remove(file_path)
-            print(f"Deleted file {json_file} after processing.")
-                
+                # Delete the JSON file after successful processing
+                os.remove(file_path)
+                print(f"Deleted file {json_file} after processing.")
+            else:
+                #skip file 
+                continue
+
         except Exception as e:
             print(f"Failed to process detailed ad file {json_file}: {e}")
             
@@ -554,8 +649,6 @@ create_table()
 create_category_table()
 create_detailed_table()
 
-load_json_files_and_insert()
+load_ads_json_files_and_insert()
 load_category_files_and_insert()
 load_detailed_files_and_insert()
-
-

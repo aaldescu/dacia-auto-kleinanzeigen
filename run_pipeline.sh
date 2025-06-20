@@ -49,17 +49,17 @@ else
 fi
 echo "-----------------------------------"
 
-# Clear the content in resume.txt
+# Clear the content in resume.json
 echo "Clearing resume.json..."
 > resume.json
 if [ $? -eq 0 ]; then
   echo "resume.json cleared successfully."
   SUCCESS_MESSAGE+="- resume.json: CLEARED\n"
 else
-  echo "Error: Could not clear resume.txt."
+  echo "Error: Could not clear resume.json."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- Failed to clear resume.txt.\n"
-  SUCCESS_MESSAGE+="- resume.txt: CLEAR FAILED\n"
+  ERROR_MESSAGE+="- Failed to clear resume.json.\n"
+  SUCCESS_MESSAGE+="- resume.json: CLEAR FAILED\n"
 fi
 echo "-----------------------------------"
 
