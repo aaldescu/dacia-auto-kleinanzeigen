@@ -91,6 +91,65 @@ else
 fi
 echo "-----------------------------------"
 
+# Clean resume_detailed.json
+echo "Clearing resume_detailed.json..."
+> resume_detailed.json
+if [ $? -eq 0 ]; then
+  echo "resume_detailed.json cleared successfully."
+  SUCCESS_MESSAGE+="- resume_detailed.json: CLEARED\n"
+else
+  echo "Error: Could not clear resume_detailed.json."
+  HAS_ERROR=1
+  ERROR_MESSAGE+="- Failed to clear resume_detailed.json.\n"
+  SUCCESS_MESSAGE+="- resume_detailed.json: CLEAR FAILED\n"
+fi
+echo "-----------------------------------"
+
+# Run the generate_urls_detailed_ad.py script.
+# arguments: 
+# all: all ads that have a href
+# today: ads posted today
+# default: today
+
+echo "Running generate_urls_detailed_ad.py..."
+python generate_urls_detailed_ad.py
+if [ $? -eq 0 ]; then
+  echo "generate_urls_detailed_ad.py completed successfully."
+  SUCCESS_MESSAGE+="- generate_urls_detailed_ad.py: SUCCESS\n"
+else
+  echo "Error: generate_urls_detailed_ad.py encountered an issue."
+  HAS_ERROR=1
+  ERROR_MESSAGE+="- generate_urls_detailed_ad.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- generate_urls_detailed_ad.py: FAILED\n"
+fi
+echo "-----------------------------------"
+
+# Run the extract_dacia_detailed.py script
+python extract_dacia_detailed.py
+if [ $? -eq 0 ]; then
+  echo "extract_dacia_detailed.py completed successfully."
+  SUCCESS_MESSAGE+="- extract_dacia_detailed.py: SUCCESS\n"
+else
+  echo "Error: extract_dacia_detailed.py encountered an issue."
+  HAS_ERROR=1
+  ERROR_MESSAGE+="- extract_dacia_detailed.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- extract_dacia_detailed.py: FAILED\n"
+fi
+echo "-----------------------------------"  
+
+# Run the transform_load.py script
+python transform_load.py
+if [ $? -eq 0 ]; then
+  echo "transform_load.py completed successfully."
+  SUCCESS_MESSAGE+="- transform_load.py: SUCCESS\n"
+else
+  echo "Error: transform_load.py encountered an issue."
+  HAS_ERROR=1
+  ERROR_MESSAGE+="- transform_load.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- transform_load.py: FAILED\n"
+fi
+echo "-----------------------------------"
+
 
 # Deactivate the virtual environment
 deactivate
