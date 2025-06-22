@@ -105,35 +105,35 @@ else
 fi
 echo "-----------------------------------"
 
-# Run the generate_urls_detailed_ad.py script.
+# Run the generate_detailed_ad_urls.py script.
 # arguments: 
 # all: all ads that have a href
 # today: ads posted today
 # default: today
 
-echo "Running generate_urls_detailed_ad.py..."
-python generate_urls_detailed_ad.py
+echo "Running generate_detailed_ad_urls.py..."
+python generate_detailed_ad_urls.py
 if [ $? -eq 0 ]; then
-  echo "generate_urls_detailed_ad.py completed successfully."
-  SUCCESS_MESSAGE+="- generate_urls_detailed_ad.py: SUCCESS\n"
+  echo "generate_detailed_ad_urls.py completed successfully."
+  SUCCESS_MESSAGE+="- generate_detailed_ad_urls.py: SUCCESS\n"
 else
-  echo "Error: generate_urls_detailed_ad.py encountered an issue."
+  echo "Error: generate_detailed_ad_urls.py encountered an issue."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- generate_urls_detailed_ad.py failed to execute properly.\n"
-  SUCCESS_MESSAGE+="- generate_urls_detailed_ad.py: FAILED\n"
+  ERROR_MESSAGE+="- generate_detailed_ad_urls.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- generate_detailed_ad_urls.py: FAILED\n"
 fi
 echo "-----------------------------------"
 
-# Run the extract_dacia_detailed.py script
-python extract_dacia_detailed.py
+# Run the extract_dacia_detailed_ad.py script
+python extract_dacia_detailed_ad.py
 if [ $? -eq 0 ]; then
-  echo "extract_dacia_detailed.py completed successfully."
-  SUCCESS_MESSAGE+="- extract_dacia_detailed.py: SUCCESS\n"
+  echo "extract_dacia_detailed_ad.py completed successfully."
+  SUCCESS_MESSAGE+="- extract_dacia_detailed_ad.py: SUCCESS\n"
 else
-  echo "Error: extract_dacia_detailed.py encountered an issue."
+  echo "Error: extract_dacia_detailed_ad.py encountered an issue."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- extract_dacia_detailed.py failed to execute properly.\n"
-  SUCCESS_MESSAGE+="- extract_dacia_detailed.py: FAILED\n"
+  ERROR_MESSAGE+="- extract_dacia_detailed_ad.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- extract_dacia_detailed_ad.py: FAILED\n"
 fi
 echo "-----------------------------------"  
 
