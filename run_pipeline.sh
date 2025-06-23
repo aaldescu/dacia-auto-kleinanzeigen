@@ -15,15 +15,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Navigate to the  directory for better context.
 cd "$SCRIPT_DIR" || exit 1
 
-# Pull the latest changes from the repository
-echo "Pulling latest changes from git repository..."
-git pull origin main
-if [ $? -ne 0 ]; then
-  HAS_ERROR=1
-  ERROR_MESSAGE+="Failed to pull latest changes from git repository.\n"
-  echo -e "Subject:ERROR - Cannot pull from git\n\nFailed to pull the latest changes from the git repository.\n\nContinuing with local version..." | msmtp andrei.aldescu@yahoo.com
-  echo "Continuing with local version..."
-fi
+
 
 # Activate the virtual environment
 echo "Activating virtual environment..."
@@ -105,22 +97,22 @@ else
 fi
 echo "-----------------------------------"
 
-# Run the generate_detailed_ad_urls.py script.
+# Run the generate_detail_ad_urls.py script.
 # arguments: 
 # all: all ads that have a href
 # today: ads posted today
 # default: today
 
-echo "Running generate_detailed_ad_urls.py..."
-python generate_detailed_ad_urls.py
+echo "Running generate_detail_ad_urls.py..."
+python generate_detail_ad_urls.py
 if [ $? -eq 0 ]; then
-  echo "generate_detailed_ad_urls.py completed successfully."
-  SUCCESS_MESSAGE+="- generate_detailed_ad_urls.py: SUCCESS\n"
+  echo "generate_detail_ad_urls.py completed successfully."
+  SUCCESS_MESSAGE+="- generate_detail_ad_urls.py: SUCCESS\n"
 else
-  echo "Error: generate_detailed_ad_urls.py encountered an issue."
+  echo "Error: generate_detail_ad_urls.py encountered an issue."
   HAS_ERROR=1
-  ERROR_MESSAGE+="- generate_detailed_ad_urls.py failed to execute properly.\n"
-  SUCCESS_MESSAGE+="- generate_detailed_ad_urls.py: FAILED\n"
+  ERROR_MESSAGE+="- generate_detail_ad_urls.py failed to execute properly.\n"
+  SUCCESS_MESSAGE+="- generate_detail_ad_urls.py: FAILED\n"
 fi
 echo "-----------------------------------"
 
