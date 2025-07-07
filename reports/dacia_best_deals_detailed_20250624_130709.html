@@ -1,0 +1,1974 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Dacia Best Deals Report (Detailed)</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1 { color: #2c3e50; }
+            table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+            th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+            th { background-color: #f2f2f2; color: #333; }
+            tr:hover { background-color: #f5f5f5; }
+            .good-deal { background-color: #d4edda; }
+            .great-deal { background-color: #c3e6cb; }
+            .amazing-deal { background-color: #b1dfbb; }
+        </style>
+    </head>
+    <body>
+        <h1>Dacia Best Deals Report (Detailed Analysis)</h1>
+        <p>Generated on: 2025-06-24 13:07:09</p>
+        <p>This report uses the advanced XGBoost model trained on detailed car features.</p>
+    <table border="1" class="dataframe deals-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ad_id</th>
+      <th>title</th>
+      <th>kilometerstand</th>
+      <th>erstzulassung</th>
+      <th>price</th>
+      <th>price_numeric</th>
+      <th>predicted_price</th>
+      <th>price_difference</th>
+      <th>price_difference_percent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>240</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117775654" target="_blank">3117775654</a></td>
+      <td>Dacia Logan MCV Kombi Laureate Diesel  Klimaanlage</td>
+      <td>339.000 km</td>
+      <td>November 2009</td>
+      <td>1.200 €</td>
+      <td>€1,200.00</td>
+      <td>€9,416.30</td>
+      <td>€8,216.30</td>
+      <td>684.7%</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116521501" target="_blank">3116521501</a></td>
+      <td>Dacia Logan MCV Kombi Laureate</td>
+      <td>183.588 km</td>
+      <td>Oktober 2010</td>
+      <td>1.799 €</td>
+      <td>€1,799.00</td>
+      <td>€9,778.21</td>
+      <td>€7,979.21</td>
+      <td>443.5%</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116845805" target="_blank">3116845805</a></td>
+      <td>Dacia Sandero</td>
+      <td>166.300 km</td>
+      <td>Februar 2010</td>
+      <td>400 €</td>
+      <td>€400.00</td>
+      <td>€8,133.34</td>
+      <td>€7,733.34</td>
+      <td>1933.3%</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117597677" target="_blank">3117597677</a></td>
+      <td>Dacia Logan</td>
+      <td>248.000 km</td>
+      <td>Januar 2009</td>
+      <td>650 €</td>
+      <td>€650.00</td>
+      <td>€7,908.92</td>
+      <td>€7,258.92</td>
+      <td>1116.8%</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117675301" target="_blank">3117675301</a></td>
+      <td>Dacia Sandero Eco 1.2 Klima TÜV 06/26 1. Hand</td>
+      <td>170.000 km</td>
+      <td>Mai 2009</td>
+      <td>500 €</td>
+      <td>€500.00</td>
+      <td>€7,754.15</td>
+      <td>€7,254.15</td>
+      <td>1450.8%</td>
+    </tr>
+    <tr>
+      <th>237</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117769785" target="_blank">3117769785</a></td>
+      <td>Dacia Logan Laureate*KLIMA*ALUFELGEN*AHK*</td>
+      <td>235.000 km</td>
+      <td>Dezember 2007</td>
+      <td>1.260 €</td>
+      <td>€1,260.00</td>
+      <td>€8,506.69</td>
+      <td>€7,246.69</td>
+      <td>575.1%</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116514852" target="_blank">3116514852</a></td>
+      <td>Dacia Logan MCV 1.6 16V ab dem 14.07</td>
+      <td>172.000 km</td>
+      <td>Oktober 2008</td>
+      <td>2.000 € VB</td>
+      <td>€2,000.00</td>
+      <td>€9,192.70</td>
+      <td>€7,192.70</td>
+      <td>359.6%</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117630596" target="_blank">3117630596</a></td>
+      <td>Dacia Logan Laureate *TÜV BIS 11/2025*</td>
+      <td>105.617 km</td>
+      <td>November 2006</td>
+      <td>1.500 €</td>
+      <td>€1,500.00</td>
+      <td>€8,558.04</td>
+      <td>€7,058.04</td>
+      <td>470.5%</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117441475" target="_blank">3117441475</a></td>
+      <td>Dacia Sandero 1.2 16V 75,Klima/Servo/Elektr.Fensterheb</td>
+      <td>115.000 km</td>
+      <td>Dezember 2009</td>
+      <td>1.700 €</td>
+      <td>€1,700.00</td>
+      <td>€8,696.46</td>
+      <td>€6,996.46</td>
+      <td>411.6%</td>
+    </tr>
+    <tr>
+      <th>260</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117838142" target="_blank">3117838142</a></td>
+      <td>Dacia Logan BJ 2009</td>
+      <td>241.150 km</td>
+      <td>August 2009</td>
+      <td>850 € VB</td>
+      <td>€850.00</td>
+      <td>€7,821.93</td>
+      <td>€6,971.93</td>
+      <td>820.2%</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117477390" target="_blank">3117477390</a></td>
+      <td>Dacia Logan MCV 1,4l AHK TÜV 10/2026 Allwetterreifen</td>
+      <td>133.000 km</td>
+      <td>März 2009</td>
+      <td>1.000 €</td>
+      <td>€1,000.00</td>
+      <td>€7,750.62</td>
+      <td>€6,750.62</td>
+      <td>675.1%</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117471172" target="_blank">3117471172</a></td>
+      <td>DACIA LOGAN LPG 1.6</td>
+      <td>225.000 km</td>
+      <td>Juni 2007</td>
+      <td>1.200 €</td>
+      <td>€1,200.00</td>
+      <td>€7,876.67</td>
+      <td>€6,676.67</td>
+      <td>556.4%</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116926334" target="_blank">3116926334</a></td>
+      <td>Dacia Logan MCV Kombi Laureate  -1.HAND/SCHECKHEFT-</td>
+      <td>220.000 km</td>
+      <td>Februar 2008</td>
+      <td>2.999 €</td>
+      <td>€2,999.00</td>
+      <td>€9,626.40</td>
+      <td>€6,627.40</td>
+      <td>221.0%</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3107641971" target="_blank">3107641971</a></td>
+      <td>Dacia Sandero Laureate</td>
+      <td>226.104 km</td>
+      <td>August 2012</td>
+      <td>1.850 €</td>
+      <td>€1,850.00</td>
+      <td>€8,361.75</td>
+      <td>€6,511.75</td>
+      <td>352.0%</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117704938" target="_blank">3117704938</a></td>
+      <td>Dacia Logan MCV II Kombi Ambi. 1,2-75PS"Euro5“El.FH"AHK"</td>
+      <td>140.324 km</td>
+      <td>August 2014</td>
+      <td>2.499 €</td>
+      <td>€2,499.00</td>
+      <td>€8,875.28</td>
+      <td>€6,376.28</td>
+      <td>255.2%</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116891946" target="_blank">3116891946</a></td>
+      <td>Dacia Sandero - Zuverlässig, sparsam, ideal für die Stadt!</td>
+      <td>52 km</td>
+      <td>Dezember 2021</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€6,288.21</td>
+      <td>€6,288.21</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117040590" target="_blank">3117040590</a></td>
+      <td>Dacia Logan 1.4 TÜV 09/26</td>
+      <td>179.000 km</td>
+      <td>Februar 2006</td>
+      <td>1.290 € VB</td>
+      <td>€1,290.00</td>
+      <td>€7,533.68</td>
+      <td>€6,243.68</td>
+      <td>484.0%</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116527292" target="_blank">3116527292</a></td>
+      <td>Dacia Logan 1.6 lpg</td>
+      <td>225.000 km</td>
+      <td>Juni 2007</td>
+      <td>1.500 € VB</td>
+      <td>€1,500.00</td>
+      <td>€7,667.83</td>
+      <td>€6,167.83</td>
+      <td>411.2%</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117686686" target="_blank">3117686686</a></td>
+      <td>Dacia Sandero 2009 160000 km</td>
+      <td>160.000 km</td>
+      <td>Juni 2009</td>
+      <td>1.000 € VB</td>
+      <td>€1,000.00</td>
+      <td>€7,000.46</td>
+      <td>€6,000.46</td>
+      <td>600.0%</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116766413" target="_blank">3116766413</a></td>
+      <td>Dacia Logan MCV TÜV 10/2026. AHK</td>
+      <td>133.000 km</td>
+      <td>März 2009</td>
+      <td>1.400 € VB</td>
+      <td>€1,400.00</td>
+      <td>€7,357.36</td>
+      <td>€5,957.36</td>
+      <td>425.5%</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117716783" target="_blank">3117716783</a></td>
+      <td>Dacia Sandero 1.4 L  2 Hand  Tüv Neu  5 Türen</td>
+      <td>198.000 km</td>
+      <td>September 2009</td>
+      <td>1.500 €</td>
+      <td>€1,500.00</td>
+      <td>€7,399.28</td>
+      <td>€5,899.28</td>
+      <td>393.3%</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117587356" target="_blank">3117587356</a></td>
+      <td>tausch / verkaufe Dacia mit TÜV 12/26</td>
+      <td>187.000 km</td>
+      <td>Februar 2005</td>
+      <td>899 € VB</td>
+      <td>€899.00</td>
+      <td>€6,725.83</td>
+      <td>€5,826.83</td>
+      <td>648.1%</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116540432" target="_blank">3116540432</a></td>
+      <td>Dacia Logan Dci 1.5</td>
+      <td>190.000 km</td>
+      <td>Juni 2010</td>
+      <td>2.000 €</td>
+      <td>€2,000.00</td>
+      <td>€7,705.00</td>
+      <td>€5,705.00</td>
+      <td>285.2%</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117737648" target="_blank">3117737648</a></td>
+      <td>Dacia Sandero Laureate 1.5 dCi   ~ TÜV NEU ~</td>
+      <td>186.500 km</td>
+      <td>August 2011</td>
+      <td>2.699 €</td>
+      <td>€2,699.00</td>
+      <td>€8,402.37</td>
+      <td>€5,703.37</td>
+      <td>211.3%</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3110559323" target="_blank">3110559323</a></td>
+      <td>Dacia Sandero 1.4*Anhängerkupplung*4-Türer*TÜV08/25*</td>
+      <td>134.000 km</td>
+      <td>Juni 2009</td>
+      <td>1.499 €</td>
+      <td>€1,499.00</td>
+      <td>€7,197.27</td>
+      <td>€5,698.27</td>
+      <td>380.1%</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117655347" target="_blank">3117655347</a></td>
+      <td>Dacia Logan Prestige 1.6 Edition*Sparsam*1.Hand*5Türer</td>
+      <td>144.000 km</td>
+      <td>Juni 2008</td>
+      <td>2.000 €</td>
+      <td>€2,000.00</td>
+      <td>€7,522.28</td>
+      <td>€5,522.28</td>
+      <td>276.1%</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117452436" target="_blank">3117452436</a></td>
+      <td>Dacia Duster</td>
+      <td>260.030 km</td>
+      <td>November 2011</td>
+      <td>2.000 € VB</td>
+      <td>€2,000.00</td>
+      <td>€7,494.06</td>
+      <td>€5,494.06</td>
+      <td>274.7%</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117643526" target="_blank">3117643526</a></td>
+      <td>Dacia Logan MCV II Kombi Laureate</td>
+      <td>330.205 km</td>
+      <td>März 2014</td>
+      <td>3.750 €</td>
+      <td>€3,750.00</td>
+      <td>€9,243.64</td>
+      <td>€5,493.64</td>
+      <td>146.5%</td>
+    </tr>
+    <tr>
+      <th>245</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117790901" target="_blank">3117790901</a></td>
+      <td>Dacia Logan MCV 2009</td>
+      <td>191.000 km</td>
+      <td>Januar 2009</td>
+      <td>1.200 €</td>
+      <td>€1,200.00</td>
+      <td>€6,680.49</td>
+      <td>€5,480.49</td>
+      <td>456.7%</td>
+    </tr>
+    <tr>
+      <th>255</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117820982" target="_blank">3117820982</a></td>
+      <td>Dacia Dokker Laureate</td>
+      <td>170.000 km</td>
+      <td>Juli 2014</td>
+      <td>3.999 €</td>
+      <td>€3,999.00</td>
+      <td>€9,469.87</td>
+      <td>€5,470.87</td>
+      <td>136.8%</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116514608" target="_blank">3116514608</a></td>
+      <td>Dacia Sandero 1,2L.16V</td>
+      <td>142.500 km</td>
+      <td>Juni 2009</td>
+      <td>1.900 € VB</td>
+      <td>€1,900.00</td>
+      <td>€7,332.50</td>
+      <td>€5,432.50</td>
+      <td>285.9%</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117020377" target="_blank">3117020377</a></td>
+      <td>Dacia Sandero</td>
+      <td>194.000 km</td>
+      <td>Februar 2009</td>
+      <td>2.200 € VB</td>
+      <td>€2,200.00</td>
+      <td>€7,597.45</td>
+      <td>€5,397.45</td>
+      <td>245.3%</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117749134" target="_blank">3117749134</a></td>
+      <td>Dacia Sandero II Stepway Ambiance*S.gepflegt*Alu*</td>
+      <td>173.000 km</td>
+      <td>April 2014</td>
+      <td>3.999 €</td>
+      <td>€3,999.00</td>
+      <td>€9,331.66</td>
+      <td>€5,332.66</td>
+      <td>133.3%</td>
+    </tr>
+    <tr>
+      <th>251</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117804851" target="_blank">3117804851</a></td>
+      <td>Dacia Duster I Laureate 4x2</td>
+      <td>158.000 km</td>
+      <td>November 2010</td>
+      <td>4.500 €</td>
+      <td>€4,500.00</td>
+      <td>€9,806.14</td>
+      <td>€5,306.14</td>
+      <td>117.9%</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116695074" target="_blank">3116695074</a></td>
+      <td>Dacia Logan 1,6</td>
+      <td>116.000 km</td>
+      <td>März 2012</td>
+      <td>2.900 €</td>
+      <td>€2,900.00</td>
+      <td>€8,050.02</td>
+      <td>€5,150.02</td>
+      <td>177.6%</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3074923413" target="_blank">3074923413</a></td>
+      <td>Dacia Sandero 1.4 MPI / AHK / TÜV Neu</td>
+      <td>113.775 km</td>
+      <td>Mai 2009</td>
+      <td>2.500 €</td>
+      <td>€2,500.00</td>
+      <td>€7,630.89</td>
+      <td>€5,130.89</td>
+      <td>205.2%</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117609497" target="_blank">3117609497</a></td>
+      <td>DACIA LOGAN MCV MOTORSCHADEN TÜV 11.2026</td>
+      <td>246.000 km</td>
+      <td>Juni 2008</td>
+      <td>500 €</td>
+      <td>€500.00</td>
+      <td>€5,547.46</td>
+      <td>€5,047.46</td>
+      <td>1009.5%</td>
+    </tr>
+    <tr>
+      <th>259</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117829739" target="_blank">3117829739</a></td>
+      <td>Dacia Sandero 1.4 MPI - AHK TÜV 26</td>
+      <td>233.000 km</td>
+      <td>November 2008</td>
+      <td>600 €</td>
+      <td>€600.00</td>
+      <td>€5,641.25</td>
+      <td>€5,041.25</td>
+      <td>840.2%</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117640570" target="_blank">3117640570</a></td>
+      <td>Dacia Sandero</td>
+      <td>143.000 km</td>
+      <td>Mai 2009</td>
+      <td>400 €</td>
+      <td>€400.00</td>
+      <td>€5,351.64</td>
+      <td>€4,951.64</td>
+      <td>1237.9%</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117546420" target="_blank">3117546420</a></td>
+      <td>Dacia Sandero 2011</td>
+      <td>134.000 km</td>
+      <td>Februar 2011</td>
+      <td>1.000 €</td>
+      <td>€1,000.00</td>
+      <td>€5,865.13</td>
+      <td>€4,865.13</td>
+      <td>486.5%</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117042952" target="_blank">3117042952</a></td>
+      <td>Dacia Dokker</td>
+      <td>72.000 km</td>
+      <td>März 2013</td>
+      <td>3.300 €</td>
+      <td>€3,300.00</td>
+      <td>€8,150.28</td>
+      <td>€4,850.28</td>
+      <td>147.0%</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116718109" target="_blank">3116718109</a></td>
+      <td>Dacia Logan 1.4Mpi 11/2006</td>
+      <td>109.000 km</td>
+      <td>November 2006</td>
+      <td>950 € VB</td>
+      <td>€950.00</td>
+      <td>€5,770.88</td>
+      <td>€4,820.88</td>
+      <td>507.5%</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116560871" target="_blank">3116560871</a></td>
+      <td>Dacia Sandero 1.4</td>
+      <td>213.000 km</td>
+      <td>März 2025</td>
+      <td>1.150 € VB</td>
+      <td>€1,150.00</td>
+      <td>€5,835.87</td>
+      <td>€4,685.87</td>
+      <td>407.5%</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116915654" target="_blank">3116915654</a></td>
+      <td>Dacia Sandero 1.4 MPI -</td>
+      <td>191.109 km</td>
+      <td>September 2010</td>
+      <td>1.400 €</td>
+      <td>€1,400.00</td>
+      <td>€6,015.82</td>
+      <td>€4,615.82</td>
+      <td>329.7%</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116581908" target="_blank">3116581908</a></td>
+      <td>Dacia Logan</td>
+      <td>244.000 km</td>
+      <td>Juni 2007</td>
+      <td>2.925 €</td>
+      <td>€2,925.00</td>
+      <td>€7,450.51</td>
+      <td>€4,525.51</td>
+      <td>154.7%</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117682050" target="_blank">3117682050</a></td>
+      <td>Dacia Logan MCV teilespender</td>
+      <td>202.000 km</td>
+      <td>Mai 2009</td>
+      <td>650 € VB</td>
+      <td>€650.00</td>
+      <td>€5,171.12</td>
+      <td>€4,521.12</td>
+      <td>695.6%</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116729690" target="_blank">3116729690</a></td>
+      <td>Dacia Logan 1.6 Benzin | 105 PS | Unfallfrei | 1. Hand | TÜV neu</td>
+      <td>128.000 km</td>
+      <td>November 2008</td>
+      <td>2.000 €</td>
+      <td>€2,000.00</td>
+      <td>€6,499.00</td>
+      <td>€4,499.00</td>
+      <td>225.0%</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/2975906293" target="_blank">2975906293</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Dokker Lodgy Logan Picku</td>
+      <td>200.000 km</td>
+      <td>November 2009</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€4,471.94</td>
+      <td>€4,471.94</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3115437618" target="_blank">3115437618</a></td>
+      <td>Dacia Sandero *TÜV NEU**73 TKM* *Garantie*</td>
+      <td>73.000 km</td>
+      <td>November 2009</td>
+      <td>3.490 €</td>
+      <td>€3,490.00</td>
+      <td>€7,959.10</td>
+      <td>€4,469.10</td>
+      <td>128.1%</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3097950626" target="_blank">3097950626</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Logan Dokker Lodgy</td>
+      <td>150.000 km</td>
+      <td>Mai 2009</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€4,449.38</td>
+      <td>€4,449.38</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117520878" target="_blank">3117520878</a></td>
+      <td>Dacia Duster 1.6 Benzin. GebrauchteWagen</td>
+      <td>290.800 km</td>
+      <td>Dezember 2013</td>
+      <td>3.150 €</td>
+      <td>€3,150.00</td>
+      <td>€7,473.72</td>
+      <td>€4,323.72</td>
+      <td>137.3%</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117434382" target="_blank">3117434382</a></td>
+      <td>Dacia Sandero mit  Klimaanlage und servolenkung</td>
+      <td>143.000 km</td>
+      <td>März 2009</td>
+      <td>700 € VB</td>
+      <td>€700.00</td>
+      <td>€4,899.68</td>
+      <td>€4,199.68</td>
+      <td>600.0%</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117671468" target="_blank">3117671468</a></td>
+      <td>Dacia Logan MCV 1 1,4Liter</td>
+      <td>188.000 km</td>
+      <td>Oktober 2007</td>
+      <td>1.500 € VB</td>
+      <td>€1,500.00</td>
+      <td>€5,640.17</td>
+      <td>€4,140.17</td>
+      <td>276.0%</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117566265" target="_blank">3117566265</a></td>
+      <td>Dacia Logan</td>
+      <td>190.000 km</td>
+      <td>April 2009</td>
+      <td>2.550 € VB</td>
+      <td>€2,550.00</td>
+      <td>€6,668.91</td>
+      <td>€4,118.91</td>
+      <td>161.5%</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117609161" target="_blank">3117609161</a></td>
+      <td>Dacia Sandero Ambiance TÜV 08/2026 Zahnriemen NEU</td>
+      <td>88.871 km</td>
+      <td>Juni 2009</td>
+      <td>3.390 €</td>
+      <td>€3,390.00</td>
+      <td>€7,498.63</td>
+      <td>€4,108.63</td>
+      <td>121.2%</td>
+    </tr>
+    <tr>
+      <th>219</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117729540" target="_blank">3117729540</a></td>
+      <td>Dacia Sandero Garagen Fahrzeug</td>
+      <td>136.000 km</td>
+      <td>August 2010</td>
+      <td>1.499 € VB</td>
+      <td>€1,499.00</td>
+      <td>€5,536.33</td>
+      <td>€4,037.33</td>
+      <td>269.3%</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117593511" target="_blank">3117593511</a></td>
+      <td>Dacia Lodgy Totalschaden Bastler</td>
+      <td>64.000 km</td>
+      <td>Juli 2017</td>
+      <td>1.400 € VB</td>
+      <td>€1,400.00</td>
+      <td>€5,320.50</td>
+      <td>€3,920.50</td>
+      <td>280.0%</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116907675" target="_blank">3116907675</a></td>
+      <td>Dacia logan</td>
+      <td>155.555 km</td>
+      <td>Juli 2008</td>
+      <td>1.500 € VB</td>
+      <td>€1,500.00</td>
+      <td>€5,412.92</td>
+      <td>€3,912.92</td>
+      <td>260.9%</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116822253" target="_blank">3116822253</a></td>
+      <td>Suche Dacia Duster mit Anhängerkupplung günstig</td>
+      <td>12.000 km</td>
+      <td>Januar 2023</td>
+      <td>1 €</td>
+      <td>€1.00</td>
+      <td>€3,845.95</td>
+      <td>€3,844.95</td>
+      <td>384494.9%</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117473150" target="_blank">3117473150</a></td>
+      <td>DACIA DUSTER 1,6L 105PS ANHÄNGERKUPPLUNG SCHALTGETRIEBE</td>
+      <td>161.000 km</td>
+      <td>Januar 2013</td>
+      <td>3.950 € VB</td>
+      <td>€3,950.00</td>
+      <td>€7,787.44</td>
+      <td>€3,837.44</td>
+      <td>97.2%</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116980479" target="_blank">3116980479</a></td>
+      <td>Guter gepflegter Dacia Duster</td>
+      <td>63.575 km</td>
+      <td>Februar 2011</td>
+      <td>4.000 €</td>
+      <td>€4,000.00</td>
+      <td>€7,836.55</td>
+      <td>€3,836.55</td>
+      <td>95.9%</td>
+    </tr>
+    <tr>
+      <th>218</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117722191" target="_blank">3117722191</a></td>
+      <td>Dacia Sandero zu verkaufen</td>
+      <td>89.703 km</td>
+      <td>Dezember 2012</td>
+      <td>4.300 € VB</td>
+      <td>€4,300.00</td>
+      <td>€8,087.58</td>
+      <td>€3,787.58</td>
+      <td>88.1%</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116801366" target="_blank">3116801366</a></td>
+      <td>Dacia Lodgy 1.2 TCe 09/26 TÜV</td>
+      <td>111.500 km</td>
+      <td>April 2013</td>
+      <td>4.600 € VB</td>
+      <td>€4,600.00</td>
+      <td>€8,379.89</td>
+      <td>€3,779.89</td>
+      <td>82.2%</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117717469" target="_blank">3117717469</a></td>
+      <td>Dacia Duster I Prestige 4x2 Motorproblem dreht</td>
+      <td>134.000 km</td>
+      <td>Juni 2011</td>
+      <td>2.650 €</td>
+      <td>€2,650.00</td>
+      <td>€6,407.60</td>
+      <td>€3,757.60</td>
+      <td>141.8%</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117735419" target="_blank">3117735419</a></td>
+      <td>Dacia Logan MCV Lauréate 1,6 16V Kombi</td>
+      <td>260.000 km</td>
+      <td>Oktober 2008</td>
+      <td>800 €</td>
+      <td>€800.00</td>
+      <td>€4,531.96</td>
+      <td>€3,731.96</td>
+      <td>466.5%</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117022897" target="_blank">3117022897</a></td>
+      <td>Dacia Sandero RS - TÜV 02.26</td>
+      <td>158.000 km</td>
+      <td>Januar 2009</td>
+      <td>1.600 €</td>
+      <td>€1,600.00</td>
+      <td>€5,290.51</td>
+      <td>€3,690.51</td>
+      <td>230.7%</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117761097" target="_blank">3117761097</a></td>
+      <td>Dacia Sandero 1.6 Benzin*TÜV/AU NEU*KLIMA</td>
+      <td>204.000 km</td>
+      <td>Dezember 2009</td>
+      <td>2.999 €</td>
+      <td>€2,999.00</td>
+      <td>€6,618.62</td>
+      <td>€3,619.62</td>
+      <td>120.7%</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117481197" target="_blank">3117481197</a></td>
+      <td>Dacia Duster 1.6 16V 105 4x2 Delsey</td>
+      <td>123.000 km</td>
+      <td>August 2012</td>
+      <td>5.200 €</td>
+      <td>€5,200.00</td>
+      <td>€8,781.51</td>
+      <td>€3,581.51</td>
+      <td>68.9%</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3102590026" target="_blank">3102590026</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Lodgy Logan Dokker</td>
+      <td>100.000 km</td>
+      <td>Februar 2007</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€3,571.76</td>
+      <td>€3,571.76</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117458985" target="_blank">3117458985</a></td>
+      <td>Dacia Logan 1.6 MPI</td>
+      <td>220.000 km</td>
+      <td>Juni 2008</td>
+      <td>1.500 €</td>
+      <td>€1,500.00</td>
+      <td>€4,947.43</td>
+      <td>€3,447.43</td>
+      <td>229.8%</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3103965327" target="_blank">3103965327</a></td>
+      <td>Dacia Sandero Ambiance,Klima,Servo.TÜV/AU 06/2027</td>
+      <td>123.650 km</td>
+      <td>April 2010</td>
+      <td>2.950 €</td>
+      <td>€2,950.00</td>
+      <td>€6,316.26</td>
+      <td>€3,366.26</td>
+      <td>114.1%</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116772744" target="_blank">3116772744</a></td>
+      <td>Dacia Sandero Top zustand</td>
+      <td>36.000 km</td>
+      <td>Juli 2009</td>
+      <td>3.890 € VB</td>
+      <td>€3,890.00</td>
+      <td>€7,252.83</td>
+      <td>€3,362.83</td>
+      <td>86.4%</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117622862" target="_blank">3117622862</a></td>
+      <td>Dacia Duster 1.6 16V 105 4x2 Prestige</td>
+      <td>69.500 km</td>
+      <td>Mai 2011</td>
+      <td>5.990 €</td>
+      <td>€5,990.00</td>
+      <td>€9,331.14</td>
+      <td>€3,341.14</td>
+      <td>55.8%</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117640174" target="_blank">3117640174</a></td>
+      <td>Dacia Duster I Laureate 4x2</td>
+      <td>186.500 km</td>
+      <td>März 2011</td>
+      <td>2.799 €</td>
+      <td>€2,799.00</td>
+      <td>€6,127.95</td>
+      <td>€3,328.95</td>
+      <td>118.9%</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3111471338" target="_blank">3111471338</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Lodgy Dokker Logan</td>
+      <td>150.000 km</td>
+      <td>Januar 2010</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€3,321.73</td>
+      <td>€3,321.73</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116628622" target="_blank">3116628622</a></td>
+      <td>Dacia Sandero, verkaufen!!</td>
+      <td>200.000 km</td>
+      <td>August 2009</td>
+      <td>650 €</td>
+      <td>€650.00</td>
+      <td>€3,953.26</td>
+      <td>€3,303.26</td>
+      <td>508.2%</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117580913" target="_blank">3117580913</a></td>
+      <td>Dacia Sandero</td>
+      <td>179.000 km</td>
+      <td>September 2009</td>
+      <td>800 € VB</td>
+      <td>€800.00</td>
+      <td>€4,089.51</td>
+      <td>€3,289.51</td>
+      <td>411.2%</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117627266" target="_blank">3117627266</a></td>
+      <td>Dacia Sandero Live | 1.Hand | Klima | Servo</td>
+      <td>132.280 km</td>
+      <td>Mai 2012</td>
+      <td>3.390 €</td>
+      <td>€3,390.00</td>
+      <td>€6,629.85</td>
+      <td>€3,239.85</td>
+      <td>95.6%</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117526358" target="_blank">3117526358</a></td>
+      <td>Dacia Sandero dCi 90 (1.5 Diesel) *KLIMA*LEDER*FZV</td>
+      <td>161.000 km</td>
+      <td>Februar 2016</td>
+      <td>3.999 €</td>
+      <td>€3,999.00</td>
+      <td>€7,224.47</td>
+      <td>€3,225.47</td>
+      <td>80.7%</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116952466" target="_blank">3116952466</a></td>
+      <td>Dacia dokker</td>
+      <td>129.000 km</td>
+      <td>September 2013</td>
+      <td>3.600 €</td>
+      <td>€3,600.00</td>
+      <td>€6,808.92</td>
+      <td>€3,208.92</td>
+      <td>89.1%</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3017850886" target="_blank">3017850886</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Logan Lodgy Dokker</td>
+      <td>150.000 km</td>
+      <td>Februar 2007</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€3,053.46</td>
+      <td>€3,053.46</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116695667" target="_blank">3116695667</a></td>
+      <td>Dacia Logan 1.6MPI</td>
+      <td>220.000 km</td>
+      <td>Juni 2008</td>
+      <td>1.600 € VB</td>
+      <td>€1,600.00</td>
+      <td>€4,636.34</td>
+      <td>€3,036.34</td>
+      <td>189.8%</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116544713" target="_blank">3116544713</a></td>
+      <td>Dacia Lodgy</td>
+      <td>193.000 km</td>
+      <td>August 2013</td>
+      <td>2.900 € VB</td>
+      <td>€2,900.00</td>
+      <td>€5,895.65</td>
+      <td>€2,995.65</td>
+      <td>103.3%</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117596710" target="_blank">3117596710</a></td>
+      <td>Dacia Sandero 2 1.0, 90Ps HU 03/26 TOP</td>
+      <td>121.000 km</td>
+      <td>März 2017</td>
+      <td>2.999 €</td>
+      <td>€2,999.00</td>
+      <td>€5,968.20</td>
+      <td>€2,969.20</td>
+      <td>99.0%</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3021819658" target="_blank">3021819658</a></td>
+      <td>Motorschaden Ankauf Dacia Sandero Duster Logan Lodgy Dokker Step</td>
+      <td>150.000 km</td>
+      <td>Januar 2010</td>
+      <td>VB</td>
+      <td>€0.00</td>
+      <td>€2,867.46</td>
+      <td>€2,867.46</td>
+      <td>inf%</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117512797" target="_blank">3117512797</a></td>
+      <td>Dacia Sandero 1.4 Benzin</td>
+      <td>109.000 km</td>
+      <td>Juni 2009</td>
+      <td>1.500 €</td>
+      <td>€1,500.00</td>
+      <td>€4,355.74</td>
+      <td>€2,855.74</td>
+      <td>190.4%</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3109278813" target="_blank">3109278813</a></td>
+      <td>Dacia Sandero 1.2 2015 1.Hand Tüv Neu</td>
+      <td>167.000 km</td>
+      <td>Juni 2015</td>
+      <td>3.090 €</td>
+      <td>€3,090.00</td>
+      <td>€5,935.56</td>
+      <td>€2,845.56</td>
+      <td>92.1%</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116797982" target="_blank">3116797982</a></td>
+      <td>Dacia Sandero SCe 75 Access Access</td>
+      <td>87.956 km</td>
+      <td>September 2018</td>
+      <td>2.999 €</td>
+      <td>€2,999.00</td>
+      <td>€5,833.06</td>
+      <td>€2,834.06</td>
+      <td>94.5%</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116520425" target="_blank">3116520425</a></td>
+      <td>Dacia Sander mit 2 Jahre Tüv … wenig gelaufen …</td>
+      <td>117.000 km</td>
+      <td>Juni 2009</td>
+      <td>2.299 € VB</td>
+      <td>€2,299.00</td>
+      <td>€5,116.84</td>
+      <td>€2,817.84</td>
+      <td>122.6%</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117539932" target="_blank">3117539932</a></td>
+      <td>Dacia Logan Tüv Neu</td>
+      <td>133.000 km</td>
+      <td>August 2011</td>
+      <td>2.500 € VB</td>
+      <td>€2,500.00</td>
+      <td>€5,314.33</td>
+      <td>€2,814.33</td>
+      <td>112.6%</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116534295" target="_blank">3116534295</a></td>
+      <td>Dacia Sandero</td>
+      <td>73.300 km</td>
+      <td>September 2013</td>
+      <td>4.990 € VB</td>
+      <td>€4,990.00</td>
+      <td>€7,778.32</td>
+      <td>€2,788.32</td>
+      <td>55.9%</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117575187" target="_blank">3117575187</a></td>
+      <td>Dacia Sandero Stepway II</td>
+      <td>78.000 km</td>
+      <td>Juni 2012</td>
+      <td>5.500 €</td>
+      <td>€5,500.00</td>
+      <td>€8,275.90</td>
+      <td>€2,775.90</td>
+      <td>50.5%</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117525384" target="_blank">3117525384</a></td>
+      <td>Dacia Duster 1.2 TCe 125 4x2 Prestige 1.Hand Klima PDC</td>
+      <td>163.997 km</td>
+      <td>Dezember 2017</td>
+      <td>5.858 €</td>
+      <td>€5,858.00</td>
+      <td>€8,580.45</td>
+      <td>€2,722.45</td>
+      <td>46.5%</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116884747" target="_blank">3116884747</a></td>
+      <td>Dacia Logan</td>
+      <td>173.000 km</td>
+      <td>August 2013</td>
+      <td>2.900 €</td>
+      <td>€2,900.00</td>
+      <td>€5,574.44</td>
+      <td>€2,674.44</td>
+      <td>92.2%</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117742884" target="_blank">3117742884</a></td>
+      <td>Dacia Sandero BJ 2010 - Anzeige lesen !</td>
+      <td>191.109 km</td>
+      <td>September 2010</td>
+      <td>600 € VB</td>
+      <td>€600.00</td>
+      <td>€3,270.29</td>
+      <td>€2,670.29</td>
+      <td>445.0%</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116680153" target="_blank">3116680153</a></td>
+      <td>Dacia Dokker Stepway</td>
+      <td>113.000 km</td>
+      <td>Oktober 2015</td>
+      <td>5.900 €</td>
+      <td>€5,900.00</td>
+      <td>€8,520.65</td>
+      <td>€2,620.65</td>
+      <td>44.4%</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116549810" target="_blank">3116549810</a></td>
+      <td>Dacia Dokker Klima 1,6 Benzin Euro 6</td>
+      <td>175.000 km</td>
+      <td>Mai 2018</td>
+      <td>4.990 €</td>
+      <td>€4,990.00</td>
+      <td>€7,605.66</td>
+      <td>€2,615.66</td>
+      <td>52.4%</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117656764" target="_blank">3117656764</a></td>
+      <td>Dacia Sandero Steppway</td>
+      <td>73.000 km</td>
+      <td>Oktober 2016</td>
+      <td>7.200 €</td>
+      <td>€7,200.00</td>
+      <td>€9,815.03</td>
+      <td>€2,615.03</td>
+      <td>36.3%</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117614024" target="_blank">3117614024</a></td>
+      <td>Dacia Sandero 1 Hand !!!</td>
+      <td>142.000 km</td>
+      <td>Januar 2016</td>
+      <td>3.800 € VB</td>
+      <td>€3,800.00</td>
+      <td>€6,413.69</td>
+      <td>€2,613.69</td>
+      <td>68.8%</td>
+    </tr>
+    <tr>
+      <th>234</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117765994" target="_blank">3117765994</a></td>
+      <td>Dacia Duster I 1.6 Laureate 4x2 | KLIMA | PDC | AHK</td>
+      <td>117.000 km</td>
+      <td>Juli 2012</td>
+      <td>5.700 €</td>
+      <td>€5,700.00</td>
+      <td>€8,295.35</td>
+      <td>€2,595.35</td>
+      <td>45.5%</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117435825" target="_blank">3117435825</a></td>
+      <td>Dacia Logan MCV + 2 Türen Bastlerfahrzeug</td>
+      <td>267.000 km</td>
+      <td>Januar 2008</td>
+      <td>450 € VB</td>
+      <td>€450.00</td>
+      <td>€3,027.59</td>
+      <td>€2,577.59</td>
+      <td>572.8%</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116978240" target="_blank">3116978240</a></td>
+      <td>Dacia Duster I Prestige 4x4</td>
+      <td>130.000 km</td>
+      <td>September 2011</td>
+      <td>5.499 €</td>
+      <td>€5,499.00</td>
+      <td>€7,963.36</td>
+      <td>€2,464.36</td>
+      <td>44.8%</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117674476" target="_blank">3117674476</a></td>
+      <td>Dacia Duster I Prestige 4x2-NAVI-LPG+BENZIN-Zahnr.2.22</td>
+      <td>152.000 km</td>
+      <td>Februar 2015</td>
+      <td>5.990 €</td>
+      <td>€5,990.00</td>
+      <td>€8,407.86</td>
+      <td>€2,417.86</td>
+      <td>40.4%</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116636231" target="_blank">3116636231</a></td>
+      <td>Dacia Sandero TCe 90 Stepway Ambiance Stepway Ambiance</td>
+      <td>86.000 km</td>
+      <td>März 2013</td>
+      <td>5.200 €</td>
+      <td>€5,200.00</td>
+      <td>€7,579.07</td>
+      <td>€2,379.07</td>
+      <td>45.8%</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116880400" target="_blank">3116880400</a></td>
+      <td>Dacia Dokker Stepway</td>
+      <td>143.000 km</td>
+      <td>Juni 2016</td>
+      <td>3.399 €</td>
+      <td>€3,399.00</td>
+      <td>€5,703.85</td>
+      <td>€2,304.85</td>
+      <td>67.8%</td>
+    </tr>
+    <tr>
+      <th>236</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117769242" target="_blank">3117769242</a></td>
+      <td>Dacia Sandero II Stepway Prestige</td>
+      <td>106.463 km</td>
+      <td>März 2013</td>
+      <td>5.900 €</td>
+      <td>€5,900.00</td>
+      <td>€8,203.94</td>
+      <td>€2,303.94</td>
+      <td>39.0%</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117653274" target="_blank">3117653274</a></td>
+      <td>Dacia Lodgy dCi 110 eco2 Celebration Celebration</td>
+      <td>153.000 km</td>
+      <td>Februar 2013</td>
+      <td>6.999 €</td>
+      <td>€6,999.00</td>
+      <td>€9,181.51</td>
+      <td>€2,182.51</td>
+      <td>31.2%</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116922843" target="_blank">3116922843</a></td>
+      <td>Duster 2016 aus 1te Hand</td>
+      <td>65.901 km</td>
+      <td>Juni 2016</td>
+      <td>4.500 € VB</td>
+      <td>€4,500.00</td>
+      <td>€6,656.62</td>
+      <td>€2,156.62</td>
+      <td>47.9%</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116939979" target="_blank">3116939979</a></td>
+      <td>Dacia Sandero II Stepway Ambiance  -1.HAND/SCHECKHEFT-</td>
+      <td>84.500 km</td>
+      <td>April 2013</td>
+      <td>5.999 €</td>
+      <td>€5,999.00</td>
+      <td>€8,128.38</td>
+      <td>€2,129.38</td>
+      <td>35.5%</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117718784" target="_blank">3117718784</a></td>
+      <td>Dacia Logan MCV II Kombi Laureate Klima Garantie</td>
+      <td>106.000 km</td>
+      <td>April 2015</td>
+      <td>5.990 €</td>
+      <td>€5,990.00</td>
+      <td>€8,054.26</td>
+      <td>€2,064.26</td>
+      <td>34.5%</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117641208" target="_blank">3117641208</a></td>
+      <td>Dacia Logan MCV II Kombi **Navi*Klima*Bluetooth**</td>
+      <td>139.000 km</td>
+      <td>Februar 2016</td>
+      <td>5.495 €</td>
+      <td>€5,495.00</td>
+      <td>€7,546.74</td>
+      <td>€2,051.74</td>
+      <td>37.3%</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117471187" target="_blank">3117471187</a></td>
+      <td>Dacia Sandero Stepway Prestige 90TCe</td>
+      <td>95.907 km</td>
+      <td>September 2016</td>
+      <td>5.200 € VB</td>
+      <td>€5,200.00</td>
+      <td>€7,166.19</td>
+      <td>€1,966.19</td>
+      <td>37.8%</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116821217" target="_blank">3116821217</a></td>
+      <td>Dacia Lodgy Prestige 7sitzerKlima Nawi SHZ</td>
+      <td>214.000 km</td>
+      <td>März 2013</td>
+      <td>4.800 € VB</td>
+      <td>€4,800.00</td>
+      <td>€6,758.06</td>
+      <td>€1,958.06</td>
+      <td>40.8%</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117024976" target="_blank">3117024976</a></td>
+      <td>Dacia Duster 1.2 TCe 125 4x2 Lauréate Navi Klima AHK</td>
+      <td>80.800 km</td>
+      <td>Februar 2014</td>
+      <td>6.600 €</td>
+      <td>€6,600.00</td>
+      <td>€8,381.13</td>
+      <td>€1,781.13</td>
+      <td>27.0%</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117756261" target="_blank">3117756261</a></td>
+      <td>Dacia Sandero</td>
+      <td>180.000 km</td>
+      <td>September 2009</td>
+      <td>900 € VB</td>
+      <td>€900.00</td>
+      <td>€2,580.84</td>
+      <td>€1,680.84</td>
+      <td>186.8%</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116986726" target="_blank">3116986726</a></td>
+      <td>Dacia Logan MCV</td>
+      <td>159.000 km</td>
+      <td>März 2008</td>
+      <td>2.800 €</td>
+      <td>€2,800.00</td>
+      <td>€4,399.64</td>
+      <td>€1,599.64</td>
+      <td>57.1%</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116587882" target="_blank">3116587882</a></td>
+      <td>Dacia Lodgy TCe 115 Prestige Prestige</td>
+      <td>112.700 km</td>
+      <td>Oktober 2012</td>
+      <td>4.200 €</td>
+      <td>€4,200.00</td>
+      <td>€5,759.85</td>
+      <td>€1,559.85</td>
+      <td>37.1%</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116944641" target="_blank">3116944641</a></td>
+      <td>Dacia Logan MCV 1.4 MPI - 1. Hand</td>
+      <td>70.000 km</td>
+      <td>Februar 2009</td>
+      <td>7.000 €</td>
+      <td>€7,000.00</td>
+      <td>€8,515.07</td>
+      <td>€1,515.07</td>
+      <td>21.6%</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117492793" target="_blank">3117492793</a></td>
+      <td>Dacia Duster 4x4 Prestige</td>
+      <td>142.000 km</td>
+      <td>Februar 2013</td>
+      <td>6.999 € VB</td>
+      <td>€6,999.00</td>
+      <td>€8,506.23</td>
+      <td>€1,507.23</td>
+      <td>21.5%</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/2667048695" target="_blank">2667048695</a></td>
+      <td>Ankauf mit Motorschaden Dacia duster sandero lodgy Logan Dokker</td>
+      <td>190.000 km</td>
+      <td>Januar 2011</td>
+      <td>3.000 € VB</td>
+      <td>€3,000.00</td>
+      <td>€4,473.04</td>
+      <td>€1,473.04</td>
+      <td>49.1%</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116998118" target="_blank">3116998118</a></td>
+      <td>Dacia Sandero II Stepway Prestige</td>
+      <td>100.000 km</td>
+      <td>Oktober 2013</td>
+      <td>4.499 €</td>
+      <td>€4,499.00</td>
+      <td>€5,881.23</td>
+      <td>€1,382.23</td>
+      <td>30.7%</td>
+    </tr>
+    <tr>
+      <th>257</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117822236" target="_blank">3117822236</a></td>
+      <td>Dacia Duster TCe 125 Prestige KLIMA AHK SHZ</td>
+      <td>103.499 km</td>
+      <td>Januar 2015</td>
+      <td>8.450 €</td>
+      <td>€8,450.00</td>
+      <td>€9,828.05</td>
+      <td>€1,378.05</td>
+      <td>16.3%</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116829542" target="_blank">3116829542</a></td>
+      <td>Sandero Neue Allwetterreifen Bremsen</td>
+      <td>76.700 km</td>
+      <td>April 2017</td>
+      <td>5.000 €</td>
+      <td>€5,000.00</td>
+      <td>€6,310.50</td>
+      <td>€1,310.50</td>
+      <td>26.2%</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117024990" target="_blank">3117024990</a></td>
+      <td>Dacia Duster 1.6l SUV -Facelift- 1. Hand wenig KM *TÜV NEU*</td>
+      <td>79.500 km</td>
+      <td>August 2014</td>
+      <td>5.800 €</td>
+      <td>€5,800.00</td>
+      <td>€7,106.99</td>
+      <td>€1,306.99</td>
+      <td>22.5%</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116622137" target="_blank">3116622137</a></td>
+      <td>Dacia Sandero dCi 90 S/S Stepway Ambiance Stepway ...</td>
+      <td>149.500 km</td>
+      <td>Mai 2014</td>
+      <td>4.800 €</td>
+      <td>€4,800.00</td>
+      <td>€6,081.59</td>
+      <td>€1,281.59</td>
+      <td>26.7%</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116576540" target="_blank">3116576540</a></td>
+      <td>Dacia Sandero SCe 75 Access Access</td>
+      <td>58.900 km</td>
+      <td>Mai 2019</td>
+      <td>6.700 €</td>
+      <td>€6,700.00</td>
+      <td>€7,919.79</td>
+      <td>€1,219.79</td>
+      <td>18.2%</td>
+    </tr>
+    <tr>
+      <th>247</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117792354" target="_blank">3117792354</a></td>
+      <td>Dacia Dokker Express Ambiance</td>
+      <td>137.620 km</td>
+      <td>August 2013</td>
+      <td>4.950 €</td>
+      <td>€4,950.00</td>
+      <td>€6,168.57</td>
+      <td>€1,218.57</td>
+      <td>24.6%</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117678021" target="_blank">3117678021</a></td>
+      <td>Dacia Lodgy 2017</td>
+      <td>98.000 km</td>
+      <td>September 2017</td>
+      <td>5.200 € VB</td>
+      <td>€5,200.00</td>
+      <td>€6,388.68</td>
+      <td>€1,188.68</td>
+      <td>22.9%</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117438576" target="_blank">3117438576</a></td>
+      <td>Dacia Sandero wenige KM Unfallfrei Checkheft gepflegt</td>
+      <td>91.000 km</td>
+      <td>Juni 2013</td>
+      <td>5.150 € VB</td>
+      <td>€5,150.00</td>
+      <td>€6,297.73</td>
+      <td>€1,147.73</td>
+      <td>22.3%</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/2971497381" target="_blank">2971497381</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Dokker Lodgy Joger Logan</td>
+      <td>200.000 km</td>
+      <td>Januar 2012</td>
+      <td>4.000 € VB</td>
+      <td>€4,000.00</td>
+      <td>€5,135.01</td>
+      <td>€1,135.01</td>
+      <td>28.4%</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/2978694885" target="_blank">2978694885</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Logan Lodgy Dokker Unfal</td>
+      <td>150.000 km</td>
+      <td>Januar 2013</td>
+      <td>3.500 € VB</td>
+      <td>€3,500.00</td>
+      <td>€4,562.23</td>
+      <td>€1,062.23</td>
+      <td>30.3%</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3115849473" target="_blank">3115849473</a></td>
+      <td>DACIA SANDERO 1,0  KLIMA,EURO 6,1.HAND</td>
+      <td>101.900 km</td>
+      <td>September 2017</td>
+      <td>3.900 €</td>
+      <td>€3,900.00</td>
+      <td>€4,903.34</td>
+      <td>€1,003.34</td>
+      <td>25.7%</td>
+    </tr>
+    <tr>
+      <th>235</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117766123" target="_blank">3117766123</a></td>
+      <td>Dacia Logan MCV SCe 75 Access Access</td>
+      <td>75.400 km</td>
+      <td>Februar 2019</td>
+      <td>7.790 €</td>
+      <td>€7,790.00</td>
+      <td>€8,746.04</td>
+      <td>€956.04</td>
+      <td>12.3%</td>
+    </tr>
+    <tr>
+      <th>261</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117841291" target="_blank">3117841291</a></td>
+      <td>Dacia Dokker 1.6 Benzin | EZ 2017 | 130.000 km | TÜV 2026</td>
+      <td>130.000 km</td>
+      <td>September 2017</td>
+      <td>7.100 €</td>
+      <td>€7,100.00</td>
+      <td>€8,016.45</td>
+      <td>€916.45</td>
+      <td>12.9%</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3102481878" target="_blank">3102481878</a></td>
+      <td>Dacia Duster 1.6 16V ✅</td>
+      <td>50.300 km</td>
+      <td>Juni 2012</td>
+      <td>5.999 €</td>
+      <td>€5,999.00</td>
+      <td>€6,911.63</td>
+      <td>€912.63</td>
+      <td>15.2%</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/2963386189" target="_blank">2963386189</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Dokker Lodgy joger logan</td>
+      <td>200.000 km</td>
+      <td>Januar 2011</td>
+      <td>4.250 € VB</td>
+      <td>€4,250.00</td>
+      <td>€5,153.10</td>
+      <td>€903.10</td>
+      <td>21.2%</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117739208" target="_blank">3117739208</a></td>
+      <td>Dacia Logan</td>
+      <td>115.000 km</td>
+      <td>Dezember 2014</td>
+      <td>2.250 € VB</td>
+      <td>€2,250.00</td>
+      <td>€3,051.16</td>
+      <td>€801.16</td>
+      <td>35.6%</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117739229" target="_blank">3117739229</a></td>
+      <td>Dacia Duster 1.6 SCe Klimaanlage Navi BT Freisprech</td>
+      <td>85.437 km</td>
+      <td>November 2017</td>
+      <td>8.299 €</td>
+      <td>€8,299.00</td>
+      <td>€9,068.94</td>
+      <td>€769.94</td>
+      <td>9.3%</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3021669882" target="_blank">3021669882</a></td>
+      <td>Dacia Logan MCV II Kombi Comfort+Navi+Klima+Kamera+AHK</td>
+      <td>132.000 km</td>
+      <td>Dezember 2019</td>
+      <td>7.490 €</td>
+      <td>€7,490.00</td>
+      <td>€8,251.02</td>
+      <td>€761.02</td>
+      <td>10.2%</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117033408" target="_blank">3117033408</a></td>
+      <td>Dacia Sandero Bj.2019 Tüv NEU - Festpreis</td>
+      <td>121.000 km</td>
+      <td>Juni 2019</td>
+      <td>4.700 €</td>
+      <td>€4,700.00</td>
+      <td>€5,438.74</td>
+      <td>€738.74</td>
+      <td>15.7%</td>
+    </tr>
+    <tr>
+      <th>252</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117807824" target="_blank">3117807824</a></td>
+      <td>Dacia Sandero Bj.2019 Tüv NEU - Festpreis</td>
+      <td>121.000 km</td>
+      <td>April 2019</td>
+      <td>4.700 €</td>
+      <td>€4,700.00</td>
+      <td>€5,438.74</td>
+      <td>€738.74</td>
+      <td>15.7%</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117540475" target="_blank">3117540475</a></td>
+      <td>Dacia duster 1.5 Diesel 2011 TÜV 03/26 1.hand</td>
+      <td>166.000 km</td>
+      <td>Juni 2011</td>
+      <td>4.900 € VB</td>
+      <td>€4,900.00</td>
+      <td>€5,633.02</td>
+      <td>€733.02</td>
+      <td>15.0%</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116518147" target="_blank">3116518147</a></td>
+      <td>Dacia Duster II 1.0 TCe Comfort°KAMERA°NAVI°SHZ°PDC°</td>
+      <td>143.699 km</td>
+      <td>Dezember 2019</td>
+      <td>8.900 €</td>
+      <td>€8,900.00</td>
+      <td>€9,559.59</td>
+      <td>€659.59</td>
+      <td>7.4%</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117537479" target="_blank">3117537479</a></td>
+      <td>Dacia Sandero</td>
+      <td>60.855 km</td>
+      <td>Juni 2012</td>
+      <td>4.980 €</td>
+      <td>€4,980.00</td>
+      <td>€5,626.44</td>
+      <td>€646.44</td>
+      <td>13.0%</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3110731794" target="_blank">3110731794</a></td>
+      <td>Motorschaden Ankauf Dacia Duster Sandero Dokker Logan Lodgy joger</td>
+      <td>200.000 km</td>
+      <td>Januar 2010</td>
+      <td>4.250 € VB</td>
+      <td>€4,250.00</td>
+      <td>€4,880.40</td>
+      <td>€630.40</td>
+      <td>14.8%</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116578330" target="_blank">3116578330</a></td>
+      <td>Dacia Sandero</td>
+      <td>58.900 km</td>
+      <td>Mai 2019</td>
+      <td>6.700 € VB</td>
+      <td>€6,700.00</td>
+      <td>€7,210.94</td>
+      <td>€510.94</td>
+      <td>7.6%</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3115964815" target="_blank">3115964815</a></td>
+      <td>Dacia Logan MCV Kombi, BJ 2019</td>
+      <td>43.070 km</td>
+      <td>Januar 2019</td>
+      <td>7.990 €</td>
+      <td>€7,990.00</td>
+      <td>€8,452.52</td>
+      <td>€462.52</td>
+      <td>5.8%</td>
+    </tr>
+    <tr>
+      <th>254</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117814515" target="_blank">3117814515</a></td>
+      <td>Dacia Sandero Stepway S&S Prestige KLIMA NAVI</td>
+      <td>106.500 km</td>
+      <td>November 2015</td>
+      <td>7.450 €</td>
+      <td>€7,450.00</td>
+      <td>€7,874.41</td>
+      <td>€424.41</td>
+      <td>5.7%</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117519940" target="_blank">3117519940</a></td>
+      <td>Dacia Lodgy Laureate*7´Sitzer*Navi*Klima*AHK*GARANTIE</td>
+      <td>133.000 km</td>
+      <td>Juni 2013</td>
+      <td>6.990 €</td>
+      <td>€6,990.00</td>
+      <td>€7,406.79</td>
+      <td>€416.79</td>
+      <td>6.0%</td>
+    </tr>
+    <tr>
+      <th>250</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117795945" target="_blank">3117795945</a></td>
+      <td>Dacia Duster 1.6 SCe Laureate 4x2 |AHK| |Klimaanlage|</td>
+      <td>92.935 km</td>
+      <td>August 2016</td>
+      <td>8.950 €</td>
+      <td>€8,950.00</td>
+      <td>€9,330.78</td>
+      <td>€380.78</td>
+      <td>4.3%</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3113959474" target="_blank">3113959474</a></td>
+      <td>Dacia Sandero II Laureate+Klima+Navi+Tempomat+1.Hand</td>
+      <td>81.450 km</td>
+      <td>Dezember 2015</td>
+      <td>6.980 €</td>
+      <td>€6,980.00</td>
+      <td>€7,355.42</td>
+      <td>€375.42</td>
+      <td>5.4%</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117593707" target="_blank">3117593707</a></td>
+      <td>Dacia Sandero</td>
+      <td>71.000 km</td>
+      <td>Oktober 2019</td>
+      <td>5.800 € VB</td>
+      <td>€5,800.00</td>
+      <td>€6,151.88</td>
+      <td>€351.88</td>
+      <td>6.1%</td>
+    </tr>
+    <tr>
+      <th>241</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117778340" target="_blank">3117778340</a></td>
+      <td>Dacia Duster I Prestige 4x2 LEDER AHK NAVI SHZ KLIMA</td>
+      <td>99.800 km</td>
+      <td>August 2016</td>
+      <td>8.990 €</td>
+      <td>€8,990.00</td>
+      <td>€9,209.79</td>
+      <td>€219.79</td>
+      <td>2.4%</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116609690" target="_blank">3116609690</a></td>
+      <td>Dacia Sandero</td>
+      <td>107.400 km</td>
+      <td>März 2013</td>
+      <td>4.550 € VB</td>
+      <td>€4,550.00</td>
+      <td>€4,712.80</td>
+      <td>€162.80</td>
+      <td>3.6%</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116583617" target="_blank">3116583617</a></td>
+      <td>Dacia Sandero</td>
+      <td>60.000 km</td>
+      <td>Juni 2019</td>
+      <td>5.999 €</td>
+      <td>€5,999.00</td>
+      <td>€6,142.71</td>
+      <td>€143.71</td>
+      <td>2.4%</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116839032" target="_blank">3116839032</a></td>
+      <td>Dacia Duster dCi 110 4x2 -NAVI-SHZ-KAMERA-AHK-EURO6</td>
+      <td>140.000 km</td>
+      <td>Dezember 2017</td>
+      <td>8.999 €</td>
+      <td>€8,999.00</td>
+      <td>€9,087.67</td>
+      <td>€88.67</td>
+      <td>1.0%</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117748054" target="_blank">3117748054</a></td>
+      <td>Dacia Logan MCV 2018</td>
+      <td>73.000 km</td>
+      <td>Juni 2018</td>
+      <td>6.350 € VB</td>
+      <td>€6,350.00</td>
+      <td>€6,411.97</td>
+      <td>€61.97</td>
+      <td>1.0%</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117584256" target="_blank">3117584256</a></td>
+      <td>Dacia Dokker Express Ambiance*TUV NEU*KLIMA*1HAND*TOP</td>
+      <td>97.000 km</td>
+      <td>März 2013</td>
+      <td>5.999 €</td>
+      <td>€5,999.00</td>
+      <td>€6,033.40</td>
+      <td>€34.40</td>
+      <td>0.6%</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3116588333" target="_blank">3116588333</a></td>
+      <td>Dacia Duster</td>
+      <td>199.000 km</td>
+      <td>Januar 2015</td>
+      <td>6.000 €</td>
+      <td>€6,000.00</td>
+      <td>€6,024.98</td>
+      <td>€24.98</td>
+      <td>0.4%</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3117520401" target="_blank">3117520401</a></td>
+      <td>Dacia Duster TCe 125 AHK/Alu/Leder/Navi/Offroad Paket</td>
+      <td>113.500 km</td>
+      <td>November 2017</td>
+      <td>8.990 €</td>
+      <td>€8,990.00</td>
+      <td>€9,006.53</td>
+      <td>€16.53</td>
+      <td>0.2%</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td><a href="https://www.kleinanzeigen.de/s-anzeige/3103793753" target="_blank">3103793753</a></td>
+      <td>Dacia Duster 1.Hand, Autogas Tüv 8/2026, Innen wie Neu, Alufelgen</td>
+      <td>123.619 km</td>
+      <td>April 2017</td>
+      <td>8.500 € VB</td>
+      <td>€8,500.00</td>
+      <td>€8,513.19</td>
+      <td>€13.19</td>
+      <td>0.2%</td>
+    </tr>
+  </tbody>
+</table>
+    </body>
+    </html>
+    

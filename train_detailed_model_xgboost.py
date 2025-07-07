@@ -43,10 +43,10 @@ def connect_to_mysql():
     except pymysql.Error as err:
         print(f"Error connecting to MySQL: {err}")
         raise
-
 def load_data_from_mysql(conn):
     """Load data from MySQL 'detailed' table"""
-    query = "SELECT * FROM detailed"
+    today = datetime.today().strftime('%Y-%m-%d')
+    query = f"SELECT * FROM detailed WHERE date_scrape != '{today}'"
     df = pd.read_sql(query, conn)
     print(f"Loaded {len(df)} records from MySQL")
     return df
