@@ -161,7 +161,8 @@ if [ $HAS_ERROR -eq 1 ]; then
   BODY="Errors occurred during the processing pipeline:\n\n$ERROR_MESSAGE\n\nFull Job Summary:\n$SUCCESS_MESSAGE\n\n$TIME_MESSAGE"
 else
   SUBJECT="SUCCESS - Script processing pipeline complete"
-  BODY="The processing pipeline completed successfully:\n\n$SUCCESS_MESSAGE\n\n$TIME_MESSAGE"
+  #BODY="The processing pipeline completed successfully:\n\n$SUCCESS_MESSAGE\n\n$TIME_MESSAGE"
+  BODY="The processing pipeline completed successfully.\n\n$TIME_MESSAGE"
 fi
 
 # Send the notification
